@@ -1,3 +1,4 @@
 
 ascii-magic==2.3
-
+pycairo==1.24.0 
+PyGobject==3.44.1
