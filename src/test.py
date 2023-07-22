@@ -42,6 +42,6 @@ builder.connect_signals(Handler())
 
 window = builder.get_object("corpus-top")
 
-window.connect("destroy", Gtk.main_quit)
+#window.connect("destroy", Gtk.main_quit)
 window.show_all()
 Gtk.main()
