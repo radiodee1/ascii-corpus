@@ -173,7 +173,7 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="button-spaces">
-                    <property name="label" translatable="yes">space for tokenizer</property>
+                    <property name="label" translatable="yes">spaces for tokenizer</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -184,8 +184,8 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button-no-spaces">
-                    <property name="label" translatable="yes">no extra spaces</property>
+                  <object class="GtkButton" id="button-prompt-edit">
+                    <property name="label" translatable="yes">prompt edit</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
@@ -200,7 +200,7 @@
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="hexpand">True</property>
-                    <property name="label" translatable="yes">status:</property>
+                    <property name="label" translatable="yes">option status:</property>
                     <attributes>
                       <attribute name="background" value="#f8f8e4e45c5c"/>
                     </attributes>
@@ -223,7 +223,7 @@
                       <object class="GtkLabel" id="label-mix">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">label</property>
+                        <property name="label" translatable="yes">mix info</property>
                         <attributes>
                           <attribute name="background" value="#9999c1c1f1f1"/>
                         </attributes>
