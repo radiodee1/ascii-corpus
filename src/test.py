@@ -30,6 +30,22 @@ class Handler():
         self.exit.connect("activate", self.menu_quit_clicked)
 
     def button_add_clicked(self, button_in):
+        # folder chooser here
+        dialog = Gtk.FileChooserDialog("Please choose a folder", None,
+            #Gtk.FileChooserAction.OPEN,
+            Gtk.FileChooserAction.SELECT_FOLDER,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+            Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            print("Open clicked")
+            print("File selected: " + dialog.get_filename())
+            #print("uri: "+ dialog.get_uris()[0])
+        elif response == Gtk.ResponseType.CANCEL:
+            print("Cancel clicked")
+
+        dialog.destroy()
+
         print("Hello Glade")
         print(button_in)
 
