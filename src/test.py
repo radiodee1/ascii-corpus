@@ -21,7 +21,11 @@ builder = Gtk.Builder()
 builder.add_from_file("test.glade")
 
 
-prompt_1 = """
+
+prompt_1 = { 
+'label' : "three-lines",
+
+'text': """
 
 ###Image: 
 {}
@@ -30,14 +34,19 @@ prompt_1 = """
 ###Answer:
 {}
 """
+}
 
-prompt_2 = """
+prompt_2 = {
+'label' : "two-lines",
+
+'text' : """
 
 ###Question:
 {}
 ###Answer:
 {}
 """
+}
 
 class Handler():
 
@@ -46,11 +55,21 @@ class Handler():
         self.source_list = []
         self.preview_url = ""
         self.insert_spaces = False
-        self.prompt = prompt_1
+        self.corpus = ""
+        self.corpus_count = 0 
+        
         self.prompt_list = [prompt_1, prompt_2] ## not used yet...
+        self.prompt_list_number = 0 
+        self.prompt = self.prompt_list[self.prompt_list_number]['text'] 
+
+        self.associate_list = ['train', 'test', 'validate']
+        self.associate_list_number = 0
+        self.associate = self.associate_list[self.associate_list_number]
 
         self.text_sources = builder.get_object("text-sources")
         self.text_preview = builder.get_object("text-preview")
+        self.label_status = builder.get_object("label-status")
+        self.label_mix = builder.get_object("label-mix")
 
         self.button_add = builder.get_object("button-add")
         self.button_add.connect('clicked', self.button_add_clicked)
@@ -60,6 +79,7 @@ class Handler():
 
         self.button_associate = builder.get_object("button-associate")
         self.button_associate.connect('clicked', self.button_associate_clicked)
+        self.button_associate.set_label('associate : ' + self.associate)
 
         self.button_remove = builder.get_object("button-remove")
         self.button_remove.connect('clicked', self.button_remove_clicked)
@@ -69,6 +89,15 @@ class Handler():
 
         self.button_show = builder.get_object("button-show")
         self.button_show.connect('clicked', self.button_show_clicked)
+
+        self.button_write = builder.get_object("button-write")
+        self.button_write.connect('clicked', self.button_write_clicked)
+
+        self.button_spaces = builder.get_object("button-spaces")
+        self.button_spaces.connect('clicked', self.button_spaces_clicked)
+
+        self.button_prompt_edit = builder.get_object("button-prompt-edit")
+        self.button_prompt_edit.connect('clicked', self.button_prompt_edit_clicked)
 
         self.exit = builder.get_object("menu-file-quit")
         self.exit.connect("activate", self.menu_quit_clicked)
@@ -84,7 +113,7 @@ class Handler():
         if response == Gtk.ResponseType.OK:
             print("Open clicked")
             #print("File selected: " + dialog.get_filename())
-            self.source_list.append(dialog.get_filename())
+            self.source_list.append(self.associate + ":" + dialog.get_filename())
             for i in self.source_list:
                 print("File selected: " + str(i))
             self.button_finish_clicked(button_in)
@@ -105,6 +134,11 @@ class Handler():
         self.text_sources.get_buffer().set_text(z)
 
     def button_associate_clicked(self, button_in):
+        self.associate_list_number += 1 
+        if self.associate_list_number >= len(self.associate_list):
+            self.associate_list_number = 0 
+        self.associate = self.associate_list[self.associate_list_number]
+        self.button_associate.set_label('associate : ' + self.associate)
         print('clicked ' + str(button_in))
 
     def button_remove_clicked(self, button_in):
@@ -156,6 +190,24 @@ class Handler():
             self.text_preview.get_buffer().set_text(sample_out)
         pass
 
+    def button_write_clicked(self, button_in):
+        self.corpus_count = 0 
+        self.label_status_set()
+        print(button_in)
+        pass 
+
+    def button_spaces_clicked(self, button_in):
+        self.insert_spaces = not self.insert_spaces
+        self.label_status_set()
+        print(button_in)
+
+    def button_prompt_edit_clicked(self, button_in):
+        self.prompt_list_number += 1 
+        if self.prompt_list_number >= len(self.prompt_list):
+            self.prompt_list_number = 0         
+        self.prompt = self.prompt_list[self.prompt_list_number]['text'] 
+        self.label_status_set()
+        print(button_in)
 
     def menu_quit_clicked(self, button_in):
         print(button_in)
@@ -165,6 +217,22 @@ class Handler():
         if question == None or len(question) == 0:
             return self.prompt.format(str(image), str(answer))
         return self.prompt.format(str(image), str(question), str(answer))
+
+    def label_status_set(self):
+        label = ""
+        label += 'prompt:' + self.prompt_list[self.prompt_list_number]['label']
+        label += ' | '
+        label += 'spacing:' + str(self.insert_spaces)
+        #label += ' | '
+        #label += 'count:' + str(self.corpus_count)
+        self.label_status.set_text(label)
+        self.label_mix_set()
+        pass
+
+    def label_mix_set(self):
+        label = ""
+        label += 'count:' + str(self.corpus_count)
+        self.label_mix.set_text(label)
 
 builder.connect_signals(Handler())
 
