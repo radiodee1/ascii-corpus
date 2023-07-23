@@ -21,11 +21,24 @@ builder = Gtk.Builder()
 builder.add_from_file("test.glade")
 
 
+prompt = """
+
+###Image: 
+{}
+###Question:
+{}
+###Answer:
+{}
+"""
+
 class Handler():
 
     def __init__(self):
 
         self.source_list = []
+        self.preview_url = ""
+        self.insert_spaces = False
+        self.prompt = prompt 
 
         self.text_sources = builder.get_object("text-sources")
         self.text_preview = builder.get_object("text-preview")
@@ -44,6 +57,9 @@ class Handler():
 
         self.button_preview = builder.get_object("button-preview")
         self.button_preview.connect('clicked', self.button_preview_clicked)
+
+        self.button_show = builder.get_object("button-show")
+        self.button_show.connect('clicked', self.button_show_clicked)
 
         self.exit = builder.get_object("menu-file-quit")
         self.exit.connect("activate", self.menu_quit_clicked)
@@ -103,24 +119,41 @@ class Handler():
             Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
         response = dialog.run()
         if response == Gtk.ResponseType.OK:
-            print("Open clicked")
+            print("Open clicked "+ str(button_in))
             print("File selected: " + dialog.get_filename())
             my_art = AsciiArt.from_image(path= dialog.get_filename())
             #my_art.to_terminal(columns=75, monochrome=True)
             sample = my_art.to_ascii(columns=75, monochrome=True )
-            self.text_preview.get_buffer().set_text(sample)
 
+            sample_out = self.substitute_in_prompt(sample, 'How many dots are there', 'there are two')
+
+            self.text_preview.get_buffer().set_text(sample_out)
+            self.preview_url = dialog.get_filename()
 
         elif response == Gtk.ResponseType.CANCEL:
             print("Cancel clicked")
-
         dialog.destroy()
-
         pass
+
+    def button_show_clicked(self, button_in):
+        if self.preview_url != "":
+            print("Open clicked " + str(button_in))
+            
+            my_art = AsciiArt.from_image(path=self.preview_url)
+            #my_art.to_terminal(columns=75, monochrome=True)
+            sample = my_art.to_ascii(columns=75, monochrome=True )
+
+            sample_out = self.substitute_in_prompt(sample, 'How many dots are there', 'there are two')
+            self.text_preview.get_buffer().set_text(sample_out)
+        pass
+
 
     def menu_quit_clicked(self, button_in):
         print(button_in)
         Gtk.main_quit()
+
+    def substitute_in_prompt(self, image, question, answer):
+        return self.prompt.format(str(image), str(question), str(answer))
 
 builder.connect_signals(Handler())
 
