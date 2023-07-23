@@ -21,10 +21,18 @@ builder = Gtk.Builder()
 builder.add_from_file("test.glade")
 
 
-prompt = """
+prompt_1 = """
 
 ###Image: 
 {}
+###Question:
+{}
+###Answer:
+{}
+"""
+
+prompt_2 = """
+
 ###Question:
 {}
 ###Answer:
@@ -38,7 +46,8 @@ class Handler():
         self.source_list = []
         self.preview_url = ""
         self.insert_spaces = False
-        self.prompt = prompt 
+        self.prompt = prompt_1
+        self.prompt_list = [prompt_1, prompt_2] ## not used yet...
 
         self.text_sources = builder.get_object("text-sources")
         self.text_preview = builder.get_object("text-preview")
@@ -153,6 +162,8 @@ class Handler():
         Gtk.main_quit()
 
     def substitute_in_prompt(self, image, question, answer):
+        if question == None or len(question) == 0:
+            return self.prompt.format(str(image), str(answer))
         return self.prompt.format(str(image), str(question), str(answer))
 
 builder.connect_signals(Handler())
