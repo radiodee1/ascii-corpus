@@ -105,12 +105,6 @@ class Handler():
         if response == Gtk.ResponseType.OK:
             print("Open clicked")
             print("File selected: " + dialog.get_filename())
-            #self.source_list.append(dialog.get_filename())
-            #for i in self.source_list:
-            #    print("File selected: " + str(i))
-            #self.button_finish_clicked(button_in)
-           #print("uri: "+ dialog.get_uris()[0])
-
             my_art = AsciiArt.from_image(path= dialog.get_filename())
             #my_art.to_terminal(columns=75, monochrome=True)
             sample = my_art.to_ascii(columns=75, monochrome=True )
