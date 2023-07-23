@@ -15,7 +15,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 from ascii_magic import AsciiArt, Front, Back, from_image
-
+import glob 
 
 builder = Gtk.Builder()
 builder.add_from_file("test.glade")
@@ -65,6 +65,11 @@ class Handler():
         self.associate_list = ['train', 'test', 'validate']
         self.associate_list_number = 0
         self.associate = self.associate_list[self.associate_list_number]
+
+        self.associate_count = { x:0 for x in self.associate_list }
+
+        self.global_question = "How many dots are there?"
+        self.global_answer = "There are"
 
         self.text_sources = builder.get_object("text-sources")
         self.text_preview = builder.get_object("text-preview")
@@ -155,7 +160,7 @@ class Handler():
 
     def button_preview_clicked(self, button_in):
          # folder chooser here
-        dialog = Gtk.FileChooserDialog("Please choose a folder", None,
+        dialog = Gtk.FileChooserDialog("Please choose a file", None,
             Gtk.FileChooserAction.OPEN,
             #Gtk.FileChooserAction.SELECT_FOLDER,
             (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
@@ -186,12 +191,14 @@ class Handler():
             #my_art.to_terminal(columns=75, monochrome=True)
             sample = my_art.to_ascii(columns=75, monochrome=True )
 
-            sample_out = self.substitute_in_prompt(sample, 'How many dots are there', 'there are two')
+            sample_out = self.substitute_in_prompt(sample, self.global_question, 'there are two')
             self.text_preview.get_buffer().set_text(sample_out)
         pass
 
     def button_write_clicked(self, button_in):
-        self.corpus_count = 0 
+        self.corpus_count = 0
+        start, end = self.text_sources.get_buffer().get_bounds()
+        self.glob_from_text_list(self.text_sources.get_buffer().get_text(start, end, True))
         self.label_status_set()
         print(button_in)
         pass 
@@ -211,6 +218,7 @@ class Handler():
 
     def menu_quit_clicked(self, button_in):
         print(button_in)
+        print(self.associate_count)
         Gtk.main_quit()
 
     def substitute_in_prompt(self, image, question, answer):
@@ -233,6 +241,38 @@ class Handler():
         label = ""
         label += 'count:' + str(self.corpus_count)
         self.label_mix.set_text(label)
+
+    def glob_from_text_list(self, t):
+        for i in t.split('\n'):
+            #print("=" + i + "=")
+            if len(i.split(":")) > 1:
+                assoc = i.split(':')[0]
+                #print("+" + assoc + "+")
+                folder = i.split(':')[1]
+                #print(i, assoc, folder)
+                for j in self.associate_list:
+                    if j == assoc:
+                        self.corpus = ""
+                        f = open("../../" + assoc + ".txt", 'a')
+                        li = []
+                        li += glob.glob(folder + '/*.png')
+                        li += glob.glob(folder + '/*.jpg')
+                        li += glob.glob(folder + '/*.jpeg')
+                        print(li)
+                        for k in li:
+                            print(k)
+                            local_answer = "two."
+                            if len(k.split('.')) > 2:
+                                local_answer = k.split('.')[-2]
+                                local_answer = ' '.join(local_answer.split('_')) + '.'
+                            my_art = AsciiArt.from_image(path=k)
+                            sample = my_art.to_ascii(columns=75, monochrome=True )
+                            sample_out = self.substitute_in_prompt(sample, self.global_question, self.global_answer + ' ' + local_answer)
+                            self.corpus += sample_out
+                            self.corpus_count += 1 
+                            #f = open("../../" + assoc + ".txt", 'a')
+                            f.write(sample_out)
+                        f.close()
 
 builder.connect_signals(Handler())
 
