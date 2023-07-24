@@ -271,7 +271,7 @@ class Handler():
                 for j in self.associate_list:
                     if j == assoc:
                         self.corpus = ""
-                        f = open( name + assoc + ".txt", 'a')
+                        f = open( name + assoc + ".txt", 'w')
                         li = []
                         li += glob.glob(folder + '/*.png')
                         li += glob.glob(folder + '/*.jpg')
@@ -285,12 +285,28 @@ class Handler():
                                 local_answer = ' '.join(local_answer.split('_')) + '.'
                             my_art = AsciiArt.from_image(path=k)
                             sample = my_art.to_ascii(columns=self.width, monochrome=True )
+                            sample = self.prep_sample_for_tokenizer(sample)
+
                             sample_out = self.substitute_in_prompt(sample, self.global_question, self.global_answer + ' ' + local_answer)
                             self.corpus += sample_out
                             self.corpus_count += 1 
                             #f = open("../../" + assoc + ".txt", 'a')
-                            f.write(sample_out)
+                        f.write(self.corpus)
                         f.close()
+
+    def prep_sample_for_tokenizer(self, sample):
+        sample_out = ""
+        for i in sample.split("\n"):
+            for j in i:
+                if j == " ":
+                    j = '.'
+                if self.insert_spaces:
+                    sample_out += j + ' '
+                else:
+                    sample_out += j 
+            sample_out += '\n'
+        return sample_out
+        
 
 builder.connect_signals(Handler())
 
