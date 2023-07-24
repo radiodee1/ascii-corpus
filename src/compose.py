@@ -51,7 +51,7 @@ def main():
         if len(sys.argv) > 1:
             name = sys.argv[-1]
             print(name)
-        pygame.image.save(screen, '../../test.png')
+        pygame.image.save(screen, name)
 
 # run the main function only if this module is executed as the main script
 # (if you import this as a module then nothing is executed)
