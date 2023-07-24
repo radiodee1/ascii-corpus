@@ -1,6 +1,6 @@
 # import the pygame module, so you can use it
 import pygame
- 
+import sys
 # define a main function
 def main():
      
@@ -44,8 +44,14 @@ def main():
                 #print(i, 'red')
 
         pygame.display.flip() 
-     
-    pygame.image.save(screen, '../../test.png')
+    
+    print(sys.argv)
+    if len(objects) > 0:
+        name = '../../test.png'
+        if len(sys.argv) > 1:
+            name = sys.argv[-1]
+            print(name)
+        pygame.image.save(screen, '../../test.png')
 
 # run the main function only if this module is executed as the main script
 # (if you import this as a module then nothing is executed)
