@@ -15,7 +15,8 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 from ascii_magic import AsciiArt, Front, Back, from_image
-import glob 
+import glob
+import os 
 
 builder = Gtk.Builder()
 builder.add_from_file("test.glade")
@@ -55,7 +56,7 @@ class Handler():
         self.source_list = []
         self.preview_url = ""
         self.insert_spaces = False
-        self.corpus = ""
+        #self.corpus = ""
         self.corpus_count = 0
 
         self.width = 40
@@ -69,6 +70,7 @@ class Handler():
         self.associate = self.associate_list[self.associate_list_number]
 
         self.associate_count = { x:0 for x in self.associate_list }
+        self.corpus = { x:"" for x in self.associate_list }
 
         self.global_question = "How many dots are there?"
         self.global_answer = "There are"
@@ -105,6 +107,9 @@ class Handler():
 
         self.button_prompt_edit = builder.get_object("button-prompt-edit")
         self.button_prompt_edit.connect('clicked', self.button_prompt_edit_clicked)
+
+        self.button_compose_go = builder.get_object("button-compose-go")
+        self.button_compose_go.connect('clicked', self.button_compose_go_clicked)
 
         self.exit = builder.get_object("menu-file-quit")
         self.exit.connect("activate", self.menu_quit_clicked)
@@ -218,6 +223,12 @@ class Handler():
         self.label_status_set()
         print(button_in)
 
+    def button_compose_go_clicked(self, button_in):
+        name = ''
+        os.system("python3 compose.py " + name)
+        print(button_in)
+        pass
+
     def menu_quit_clicked(self, button_in):
         print(button_in)
         print(self.associate_count)
@@ -270,7 +281,7 @@ class Handler():
                 #print(i, assoc, folder)
                 for j in self.associate_list:
                     if j == assoc:
-                        self.corpus = ""
+                        #self.corpus[assoc] = ""
                         f = open( name + assoc + ".txt", 'w')
                         li = []
                         li += glob.glob(folder + '/*.png')
@@ -288,13 +299,14 @@ class Handler():
                             sample = self.prep_sample_for_tokenizer(sample)
 
                             sample_out = self.substitute_in_prompt(sample, self.global_question, self.global_answer + ' ' + local_answer)
-                            self.corpus += sample_out
+                            self.corpus[assoc] += sample_out
                             self.corpus_count += 1
                         self.associate_count[assoc] = self.corpus_count
                         
-                        f.write(self.corpus)
+                        f.write(self.corpus[assoc])
                         f.close()
 
+        self.corpus = { x:"" for x in self.associate_list }
         self.label_mix_set()
 
     def prep_sample_for_tokenizer(self, sample):
