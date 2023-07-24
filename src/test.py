@@ -241,7 +241,7 @@ class Handler():
 
     def label_mix_set(self):
         label = ""
-        label += 'count:' + str(self.corpus_count)
+        label += 'count:' + str(self.associate_count)
         self.label_mix.set_text(label)
 
     def glob_from_text_list(self, t):
@@ -289,10 +289,13 @@ class Handler():
 
                             sample_out = self.substitute_in_prompt(sample, self.global_question, self.global_answer + ' ' + local_answer)
                             self.corpus += sample_out
-                            self.corpus_count += 1 
-                            #f = open("../../" + assoc + ".txt", 'a')
+                            self.corpus_count += 1
+                        self.associate_count[assoc] = self.corpus_count
+                        
                         f.write(self.corpus)
                         f.close()
+
+        self.label_mix_set()
 
     def prep_sample_for_tokenizer(self, sample):
         sample_out = ""
