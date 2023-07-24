@@ -56,7 +56,9 @@ class Handler():
         self.preview_url = ""
         self.insert_spaces = False
         self.corpus = ""
-        self.corpus_count = 0 
+        self.corpus_count = 0
+
+        self.width = 40
         
         self.prompt_list = [prompt_1, prompt_2] ## not used yet...
         self.prompt_list_number = 0 
@@ -171,7 +173,7 @@ class Handler():
             print("File selected: " + dialog.get_filename())
             my_art = AsciiArt.from_image(path= dialog.get_filename())
             #my_art.to_terminal(columns=75, monochrome=True)
-            sample = my_art.to_ascii(columns=75, monochrome=True )
+            sample = my_art.to_ascii(columns=self.width, monochrome=True )
 
             sample_out = self.substitute_in_prompt(sample, 'How many dots are there', 'there are two')
 
@@ -189,7 +191,7 @@ class Handler():
             
             my_art = AsciiArt.from_image(path=self.preview_url)
             #my_art.to_terminal(columns=75, monochrome=True)
-            sample = my_art.to_ascii(columns=75, monochrome=True )
+            sample = my_art.to_ascii(columns=self.width, monochrome=True )
 
             sample_out = self.substitute_in_prompt(sample, self.global_question, 'there are two')
             self.text_preview.get_buffer().set_text(sample_out)
@@ -243,6 +245,22 @@ class Handler():
         self.label_mix.set_text(label)
 
     def glob_from_text_list(self, t):
+        name = "../../"
+
+        dialog = Gtk.FileChooserDialog("Please choose a name", None,
+            Gtk.FileChooserAction.SAVE,
+            #Gtk.FileChooserAction.SELECT_FOLDER,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+            Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            #print("Open clicked "+ str(button_in))
+            print("File selected: " + dialog.get_filename())
+            name = dialog.get_filename() + "."
+        elif response == Gtk.ResponseType.CANCEL:
+            print("Cancel clicked")
+        dialog.destroy()
+
         for i in t.split('\n'):
             #print("=" + i + "=")
             if len(i.split(":")) > 1:
@@ -253,7 +271,7 @@ class Handler():
                 for j in self.associate_list:
                     if j == assoc:
                         self.corpus = ""
-                        f = open("../../" + assoc + ".txt", 'a')
+                        f = open( name + assoc + ".txt", 'a')
                         li = []
                         li += glob.glob(folder + '/*.png')
                         li += glob.glob(folder + '/*.jpg')
@@ -266,7 +284,7 @@ class Handler():
                                 local_answer = k.split('.')[-2]
                                 local_answer = ' '.join(local_answer.split('_')) + '.'
                             my_art = AsciiArt.from_image(path=k)
-                            sample = my_art.to_ascii(columns=75, monochrome=True )
+                            sample = my_art.to_ascii(columns=self.width, monochrome=True )
                             sample_out = self.substitute_in_prompt(sample, self.global_question, self.global_answer + ' ' + local_answer)
                             self.corpus += sample_out
                             self.corpus_count += 1 
