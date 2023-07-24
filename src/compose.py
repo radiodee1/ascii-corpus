@@ -38,8 +38,10 @@ def main():
 
             for i in objects:
                 down1, down2 = i 
-                down3 = 25
-                down4 = 25
+                down1 -= 15
+                down2 -= 15
+                down3 = 30
+                down4 = 30
                 pygame.draw.rect(screen, 'red',  [down1, down2, down3, down4] )
                 #print(i, 'red')
 
@@ -48,7 +50,7 @@ def main():
     print(sys.argv)
     if len(objects) > 0:
         name = '../../test.png'
-        if len(sys.argv) > 1:
+        if len(sys.argv) == 2:
             name = sys.argv[-1]
             print(name)
         pygame.image.save(screen, name)
