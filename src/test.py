@@ -86,6 +86,8 @@ class Handler():
         self.text_preview = builder.get_object("text-preview")
         self.label_status = builder.get_object("label-status")
         self.label_mix = builder.get_object("label-mix")
+        self.label_csv_1 = builder.get_object("label-csv-1")
+        self.label_csv_2 = builder.get_object("label-csv-2")
 
         self.button_add = builder.get_object("button-add")
         self.button_add.connect('clicked', self.button_add_clicked)
@@ -126,6 +128,18 @@ class Handler():
 
         self.dots_csv_save = builder.get_object("button-compose-csv-save")
         self.dots_csv_save.connect('clicked', self.dots_csv_save_clicked)
+
+        self.dots_csv_location_button = builder.get_object("csv-location")
+        self.dots_csv_location_button.connect('clicked', self.dots_csv_location_button_clicked)
+
+        self.dots_csv_png_button = builder.get_object("csv-png")
+        self.dots_csv_png_button.connect('clicked', self.dots_csv_png_button_clicked)
+
+        self.dots_csv_size_button = builder.get_object("csv-size")
+        self.dots_csv_size_button.connect('clicked', self.dots_csv_size_button_clicked)
+
+        self.dots_csv_type_button = builder.get_object("csv-type")
+        self.dots_csv_type_button.connect('clicked', self.dots_csv_type_button_clicked)
 
         self.exit = builder.get_object("menu-file-quit")
         self.exit.connect("activate", self.menu_quit_clicked)
@@ -251,6 +265,8 @@ class Handler():
         #self.compose_dots.show_all()
         self.compose_dots = builder.get_object('csv-top')
         self.compose_dots.show_all()
+        self.label_csv_2_set()
+        self.label_csv_1_set()
         print(button_in)
         pass
 
@@ -262,6 +278,78 @@ class Handler():
     def dots_csv_save_clicked(self, button_in):
         print(button_in)
         self.compose_dots.hide()
+
+    def dots_csv_location_button_clicked(self, button_in):
+        name = "../../"
+
+        dialog = Gtk.FileChooserDialog("Please choose a name", None,
+            Gtk.FileChooserAction.SAVE,
+            #Gtk.FileChooserAction.SELECT_FOLDER,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+            Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            #print("Open clicked "+ str(button_in))
+            print("File selected: " + dialog.get_filename())
+            name = dialog.get_filename() #+ "."
+        elif response == Gtk.ResponseType.CANCEL:
+            print("Cancel clicked")
+        dialog.destroy()
+
+        self.dots_csv_location = name
+        self.label_csv_1_set()
+        print(button_in)
+
+    def dots_csv_png_button_clicked(self, button_in):
+        dialog = Gtk.FileChooserDialog("Please choose a folder", None,
+            #Gtk.FileChooserAction.OPEN,
+            Gtk.FileChooserAction.SELECT_FOLDER,
+            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+            Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+        response = dialog.run()
+        if response == Gtk.ResponseType.OK:
+            print("Open clicked")
+            #print("File selected: " + dialog.get_filename())
+            #self.source_list.append(self.associate + ":" + dialog.get_filename())
+            self.dots_png_location = dialog.get_filename()
+            for i in self.source_list:
+                print("File selected: " + str(i))
+            self.button_finish_clicked(button_in)
+           #print("uri: "+ dialog.get_uris()[0])
+        elif response == Gtk.ResponseType.CANCEL:
+            print("Cancel clicked")
+        self.label_csv_2_set()
+        dialog.destroy()
+        print(button_in)
+
+    def dots_csv_size_button_clicked(self, button_in):
+        self.dots_sizes_number += 1 
+        if self.dots_sizes_number >= len(self.dots_sizes):
+            self.dots_sizes_number = 0 
+        print(button_in)
+        self.label_csv_1_set()
+        pass
+
+    def dots_csv_type_button_clicked(self, button_in):
+        self.dots_types_number += 1 
+        if self.dots_types_number >= len(self.dots_types):
+            self.dots_types_number = 0 
+        print(button_in)
+        self.label_csv_2_set()
+
+    def label_csv_2_set(self):
+        content = ""
+        content += self.dots_types[self.dots_types_number] + ' | '
+        content += self.dots_png_location.split("/")[-1]
+        self.label_csv_2.set_text(content)
+        pass
+
+    def label_csv_1_set(self):
+        content = ""
+        content += str(self.dots_sizes[self.dots_sizes_number]) + ' | '
+        content += self.dots_csv_location.split("/")[-1]
+        self.label_csv_1.set_text(content)
+        pass
     ### submenu csv dots end here ###
 
 
