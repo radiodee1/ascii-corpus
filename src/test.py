@@ -28,11 +28,11 @@ prompt_1 = {
 
 'text': """
 
-###Image: 
+### Image: 
 {}
-###Question:
+### Question:
 {}
-###Answer:
+### Answer:
 {}
 """
 }
@@ -42,9 +42,9 @@ prompt_2 = {
 
 'text' : """
 
-###Question:
+### Question:
 {}
-###Answer:
+### Answer:
 {}
 """
 }
