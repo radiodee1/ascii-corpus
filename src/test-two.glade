@@ -7,7 +7,8 @@
     <child>
       <object class="GtkBox" id="grid">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can-focus">True</property>
+        <property name="is-focus">True</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkMenuBar" id="menu-bar">
@@ -17,7 +18,7 @@
               <object class="GtkMenuItem">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">File</property>
+                <property name="label" translatable="yes">File-two</property>
                 <child type="submenu">
                   <object class="GtkMenu">
                     <property name="visible">True</property>
@@ -101,8 +102,10 @@
           <object class="GtkNotebook" id="notebook">
             <property name="visible">True</property>
             <property name="can-focus">True</property>
+            <property name="has-focus">True</property>
             <property name="hexpand">True</property>
             <property name="vexpand">True</property>
+            <property name="show-border">False</property>
             <property name="scrollable">True</property>
             <child>
               <!-- n-columns=1 n-rows=5 -->
@@ -182,7 +185,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">sources</property>
-                <property name="selectable">True</property>
               </object>
               <packing>
                 <property name="tab-fill">False</property>
@@ -243,7 +245,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">preview</property>
-                <property name="selectable">True</property>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -348,7 +349,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">output</property>
-                <property name="selectable">True</property>
               </object>
               <packing>
                 <property name="position">2</property>
@@ -411,6 +411,12 @@
                 <property name="position">3</property>
                 <property name="tab-fill">False</property>
               </packing>
+            </child>
+            <child type="action-start">
+              <placeholder/>
+            </child>
+            <child type="action-end">
+              <placeholder/>
             </child>
           </object>
           <packing>

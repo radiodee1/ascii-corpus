@@ -96,7 +96,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">sources</property>
-                <property name="selectable">True</property>
               </object>
               <packing>
                 <property name="tab-fill">False</property>
@@ -157,7 +156,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">preview</property>
-                <property name="selectable">True</property>
               </object>
               <packing>
                 <property name="position">1</property>
@@ -262,7 +260,6 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">output</property>
-                <property name="selectable">True</property>
               </object>
               <packing>
                 <property name="position">2</property>
