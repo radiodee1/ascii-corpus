@@ -72,6 +72,13 @@ class Handler():
         self.associate_count = { x:0 for x in self.associate_list }
         self.corpus = { x:"" for x in self.associate_list }
 
+        self.dots_csv_location = ""
+        self.dots_png_location = ""
+        self.dots_sizes = [50, 100, 1000]
+        self.dots_types = ["0-9", "0-4", "5-9"]
+        self.dots_sizes_number = 0 
+        self.dots_types_number = 0 
+
         self.global_question = "How many dots are there?"
         self.global_answer = "There are"
 
@@ -111,8 +118,19 @@ class Handler():
         self.button_compose_go = builder.get_object("button-compose-go")
         self.button_compose_go.connect('clicked', self.button_compose_go_clicked)
 
+        self.button_compose_csv = builder.get_object("button-compose-csv")
+        self.button_compose_csv.connect('clicked', self.button_compose_csv_clicked)
+
+        self.dots_csv_cancel = builder.get_object("button-compose-csv-cancel")
+        self.dots_csv_cancel.connect('clicked', self.dots_csv_cancel_clicked)
+
+        self.dots_csv_save = builder.get_object("button-compose-csv-save")
+        self.dots_csv_save.connect('clicked', self.dots_csv_save_clicked)
+
         self.exit = builder.get_object("menu-file-quit")
         self.exit.connect("activate", self.menu_quit_clicked)
+
+        self.compose_dots = builder.get_object('csv-top')
 
     def button_add_clicked(self, button_in):
         # folder chooser here
@@ -228,6 +246,24 @@ class Handler():
         os.system("python3 compose.py " + name)
         print(button_in)
         pass
+
+    def button_compose_csv_clicked(self, button_in):
+        #self.compose_dots.show_all()
+        self.compose_dots = builder.get_object('csv-top')
+        self.compose_dots.show_all()
+        print(button_in)
+        pass
+
+    ### submenu csv dots start here ###
+    def dots_csv_cancel_clicked(self, button_in):
+        self.compose_dots.hide()
+        print(button_in)
+
+    def dots_csv_save_clicked(self, button_in):
+        print(button_in)
+        self.compose_dots.hide()
+    ### submenu csv dots end here ###
+
 
     def menu_quit_clicked(self, button_in):
         print(button_in)
