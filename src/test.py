@@ -16,7 +16,8 @@ from gi.repository import Gtk
 
 from ascii_magic import AsciiArt, Front, Back, from_image
 import glob
-import os 
+import os
+import random
 
 builder = Gtk.Builder()
 builder.add_from_file("test.glade")
@@ -277,6 +278,7 @@ class Handler():
 
     def dots_csv_save_clicked(self, button_in):
         print(button_in)
+        self.prep_csv_for_dots()
         self.compose_dots.hide()
 
     def dots_csv_location_button_clicked(self, button_in):
@@ -445,6 +447,32 @@ class Handler():
                     sample_out += j 
             sample_out += '\n'
         return sample_out
+
+    def prep_csv_for_dots(self):
+        if self.dots_csv_location.strip() == "" or self.dots_png_location.strip() == "":
+            return
+        lines = []
+        list_done = 0 
+        options = []
+        shuffle_list = []
+        while list_done < self.dots_sizes[self.dots_sizes_number]:
+            if len(options) == 0:
+                type_in = self.dots_types[self.dots_types_number]
+                start = int(type_in.split('-')[0])
+                end = int(type_in.split('-')[1]) + 1
+
+                options = [x for x in range(start, end)]
+                shuffle_list = random.sample(options, len(options))
+                print(shuffle_list)
+                pass
+            if len(shuffle_list) > 0:
+                label = shuffle_list.pop(0)
+                label_string = self.dots_png_location + "/file_" + str(list_done) + "." + str(label) + ".png"
+                lines.append(label_string)
+            list_done += 1 
+        print(lines)
+
+        pass
         
 
 builder.connect_signals(Handler())

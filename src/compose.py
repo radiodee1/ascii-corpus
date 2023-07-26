@@ -45,10 +45,12 @@ def main():
                 pygame.draw.rect(screen, 'red',  [down1, down2, down3, down4] )
                 #print(i, 'red')
 
+        pygame.display.set_caption(sys.argv[-1])
         pygame.display.flip() 
     
     print(sys.argv)
     if len(objects) > 0:
+
         name = '../../test.png'
         if len(sys.argv) == 2:
             name = sys.argv[-1]
