@@ -75,13 +75,15 @@ class Handler():
 
         self.dots_csv_location = ""
         self.dots_png_location = ""
-        self.dots_sizes = [50, 100, 1000]
+        self.dots_sizes = [5, 50, 100, 1000]
         self.dots_types = ["0-9", "0-4", "5-9"]
         self.dots_sizes_number = 0 
         self.dots_types_number = 0 
 
         self.mechanical_generate_file = ""
-        self.mechanical_generate_file_number = 0 
+        self.mechanical_generate_file_number = 0
+        self.mechanical_lines = []
+        self.mechanical_numbers = []
 
         self.global_question = "How many dots are there?"
         self.global_answer = "There are"
@@ -260,7 +262,7 @@ class Handler():
         print(button_in)
 
     def button_compose_go_clicked(self, button_in):
-        if self.mechanical_generate_file.strip() == "":
+        if self.mechanical_generate_file.strip() == "" and len(self.mechanical_lines) == 0:
          # folder chooser here
             dialog = Gtk.FileChooserDialog("Please choose a file", None,
                 Gtk.FileChooserAction.OPEN,
@@ -277,17 +279,45 @@ class Handler():
             self.mechanical_generate_file_number = 0 
             return
 
-        f = open(self.mechanical_generate_file, 'r')
-        lines = f.readlines()
-        png_name = lines[self.mechanical_generate_file_number].split(',')[0]
-        f.close()
+        if self.mechanical_generate_file_number == 0 and len(self.mechanical_lines) == 0:
+            f = open(self.mechanical_generate_file, 'r')
+            #self.mechanical_lines = f.readlines()
+            lines = f.readlines()
+            for i in lines:
+                self.mechanical_lines.append(i.split(',')[0])
+                self.mechanical_numbers.append(int(i.split(',')[1]))
+            f.close()
+
+        #self.mechanical_generate_file_number += 1 
+        num = 0
+        png_name = ""
+
+        if self.mechanical_generate_file_number >= len(self.mechanical_lines) :
+            return
+
+        png_name = self.mechanical_lines[self.mechanical_generate_file_number] 
+        num = self.mechanical_numbers[self.mechanical_generate_file_number] 
+        self.mechanical_numbers[self.mechanical_generate_file_number] = 1 
+        
+        while num == 1 and self.mechanical_generate_file_number < len(self.mechanical_lines):
+            png_name = self.mechanical_lines[self.mechanical_generate_file_number] 
+            num = self.mechanical_numbers[self.mechanical_generate_file_number] 
+            #self.mechanical_numbers[self.mechanical_generate_file_number] = 1 
+            #count += 1 
+            self.mechanical_generate_file_number += 1 
+            
+        if self.mechanical_generate_file_number >= len(self.mechanical_lines):
+            return
+
         if len(png_name.strip()) == 0:
             self.mechanical_generate_file_number += 1 
             return 
-        self.mechanical_generate_file_number += 1 
+         
         name = png_name
         if png_name.strip().endswith(".png"):
             os.system("python3 compose.py " + name)
+
+        #self.mechanical_generate_file_number += 1  ## sneaky??
         print(button_in)
         print(self.mechanical_generate_file_number, 'number from csv file.')
         pass
@@ -388,6 +418,13 @@ class Handler():
 
     def menu_quit_clicked(self, button_in):
         print(button_in)
+        if self.mechanical_generate_file_number < len(self.mechanical_lines) - 1 and self.mechanical_generate_file_number >= 0:
+            self.mechanical_numbers[self.mechanical_generate_file_number - 1] = 1 
+            f = open(self.mechanical_generate_file + '.incomplete.csv', 'w')
+            for i in range(len(self.mechanical_lines)):
+                f.write(self.mechanical_lines[i] + ',' + str(self.mechanical_numbers[i]) + '\n')
+                pass
+            f.close()
         print(self.associate_count)
         Gtk.main_quit()
 
