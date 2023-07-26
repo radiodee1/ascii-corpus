@@ -80,6 +80,9 @@ class Handler():
         self.dots_sizes_number = 0 
         self.dots_types_number = 0 
 
+        self.mechanical_generate_file = ""
+        self.mechanical_generate_file_number = 0 
+
         self.global_question = "How many dots are there?"
         self.global_answer = "There are"
 
@@ -257,9 +260,36 @@ class Handler():
         print(button_in)
 
     def button_compose_go_clicked(self, button_in):
-        name = ''
-        os.system("python3 compose.py " + name)
+        if self.mechanical_generate_file.strip() == "":
+         # folder chooser here
+            dialog = Gtk.FileChooserDialog("Please choose a file", None,
+                Gtk.FileChooserAction.OPEN,
+                #Gtk.FileChooserAction.SELECT_FOLDER,
+                (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+                Gtk.STOCK_OPEN, Gtk.ResponseType.OK))
+            response = dialog.run()
+            if response == Gtk.ResponseType.OK:
+                self.mechanical_generate_file = dialog.get_filename()
+
+            elif response == Gtk.ResponseType.CANCEL:
+                print("Cancel clicked")
+            dialog.destroy()
+            self.mechanical_generate_file_number = 0 
+            return
+
+        f = open(self.mechanical_generate_file, 'r')
+        lines = f.readlines()
+        png_name = lines[self.mechanical_generate_file_number].split(',')[0]
+        f.close()
+        if len(png_name.strip()) == 0:
+            self.mechanical_generate_file_number += 1 
+            return 
+        self.mechanical_generate_file_number += 1 
+        name = png_name
+        if png_name.strip().endswith(".png"):
+            os.system("python3 compose.py " + name)
         print(button_in)
+        print(self.mechanical_generate_file_number, 'number from csv file.')
         pass
 
     def button_compose_csv_clicked(self, button_in):
@@ -348,6 +378,7 @@ class Handler():
 
     def label_csv_1_set(self):
         content = ""
+        #content += str(self.mechanical_generate_file_number) + "/"
         content += str(self.dots_sizes[self.dots_sizes_number]) + ' | '
         content += self.dots_csv_location.split("/")[-1]
         self.label_csv_1.set_text(content)
@@ -470,7 +501,7 @@ class Handler():
                 label_string = self.dots_png_location + "/file_dots_" + str(list_done) + "." + str(label) + ".png"
                 lines.append(label_string)
             list_done += 1 
-        print(lines)
+        #print(lines)
         if not self.dots_csv_location.endswith('.csv'):
             self.dots_csv_location += '.csv'
         f = open(self.dots_csv_location, 'w')
