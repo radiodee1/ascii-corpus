@@ -471,7 +471,12 @@ class Handler():
                 lines.append(label_string)
             list_done += 1 
         print(lines)
-
+        if not self.dots_csv_location.endswith('.csv'):
+            self.dots_csv_location += '.csv'
+        f = open(self.dots_csv_location, 'w')
+        for i in lines:
+            f.write(i + ',0\n')
+        f.close()
         pass
         
 
