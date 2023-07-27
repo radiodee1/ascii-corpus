@@ -49,13 +49,15 @@ def main():
         pygame.display.flip() 
     
     print(sys.argv)
-    #if len(objects) > 0:
+    num = sys.argv[-1].split(".")[-2]
 
-    name = '../../test.png'
-    if len(sys.argv) == 2:
-        name = sys.argv[-1]
-        print(name)
-    pygame.image.save(screen, name)
+    if len(objects) > 0 or num.startswith('0'):
+        print(num)
+        name = '../../test.png'
+        if len(sys.argv) == 2:
+            name = sys.argv[-1]
+            print(name)
+        pygame.image.save(screen, name)
 
 # run the main function only if this module is executed as the main script
 # (if you import this as a module then nothing is executed)

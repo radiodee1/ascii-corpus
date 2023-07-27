@@ -56,7 +56,7 @@ class Handler():
 
         self.source_list = []
         self.preview_url = ""
-        self.insert_spaces = False
+        self.insert_spaces = True
         #self.corpus = ""
         self.corpus_count = 0
 
@@ -218,6 +218,8 @@ class Handler():
             #my_art.to_terminal(columns=75, monochrome=True)
             sample = my_art.to_ascii(columns=self.width, monochrome=True )
 
+            sample = self.prep_sample_for_tokenizer(sample)
+            
             sample_out = self.substitute_in_prompt(sample, 'How many dots are there', 'there are two')
 
             self.text_preview.get_buffer().set_text(sample_out)
@@ -236,6 +238,8 @@ class Handler():
             #my_art.to_terminal(columns=75, monochrome=True)
             sample = my_art.to_ascii(columns=self.width, monochrome=True )
 
+            sample = self.prep_sample_for_tokenizer(sample)
+            
             sample_out = self.substitute_in_prompt(sample, self.global_question, 'there are two')
             self.text_preview.get_buffer().set_text(sample_out)
         pass
@@ -284,6 +288,9 @@ class Handler():
             #self.mechanical_lines = f.readlines()
             lines = f.readlines()
             for i in lines:
+                if len(i.split(',')) < 2:
+                    f.close()
+                    return
                 self.mechanical_lines.append(i.split(',')[0])
                 self.mechanical_numbers.append(int(i.split(',')[1]))
             f.close()
