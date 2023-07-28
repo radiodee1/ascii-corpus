@@ -18,6 +18,7 @@ from ascii_magic import AsciiArt, Front, Back, from_image
 import glob
 import os
 import random
+import json 
 
 builder = Gtk.Builder()
 builder.add_from_file("test.glade")
@@ -50,6 +51,24 @@ prompt_2 = {
 """
 }
 
+
+json_prompt_1 = {
+        'label' : 'json-three-lines',
+        'text' : {
+            'image': '{}',
+            'question': '{}',
+            'answer': '{}'
+            }
+        }
+
+json_prompt_2 = {
+        'label': 'json-two-lines',
+        'text' : {
+            'question': "{}",
+            'answer': "{}"
+            }
+        }
+
 class Handler():
 
     def __init__(self):
@@ -64,7 +83,11 @@ class Handler():
         
         self.prompt_list = [prompt_1, prompt_2] ## not used yet...
         self.prompt_list_number = 0 
-        self.prompt = self.prompt_list[self.prompt_list_number]['text'] 
+        self.prompt = self.prompt_list[self.prompt_list_number]['text']
+
+        self.json_prompt_list = [ json_prompt_1, json_prompt_2 ]
+        self.json_prompt_list_number = 0 
+        self.json_prompt = self.json_prompt_list[self.json_prompt_list_number]['text']
 
         self.associate_list = ['train', 'test', 'validate']
         self.associate_list_number = 0
@@ -72,6 +95,8 @@ class Handler():
 
         self.associate_count = { x:0 for x in self.associate_list }
         self.corpus = { x:"" for x in self.associate_list }
+        self.corpus_json = {x: [] for x in self.associate_list}
+
 
         self.dots_csv_location = ""
         self.dots_png_location = ""
@@ -116,6 +141,9 @@ class Handler():
 
         self.button_write = builder.get_object("button-write")
         self.button_write.connect('clicked', self.button_write_clicked)
+
+        self.button_write_json = builder.get_object("button-write-json")
+        self.button_write_json.connect('clicked', self.button_write_json_clicked)
 
         self.button_spaces = builder.get_object("button-spaces")
         self.button_spaces.connect('clicked', self.button_spaces_clicked)
@@ -250,7 +278,14 @@ class Handler():
         self.glob_from_text_list(self.text_sources.get_buffer().get_text(start, end, True))
         self.label_status_set()
         print(button_in)
-        pass 
+        pass
+
+    def button_write_json_clicked(self, button_in):
+        self.corpus_count = 0 
+        start, end = self.text_sources.get_buffer().get_bounds()
+        self.glob_from_text_list(self.text_sources.get_buffer().get_text(start, end, True), use_json=True)
+        self.label_status_set()
+        print(button_in)
 
     def button_spaces_clicked(self, button_in):
         self.insert_spaces = not self.insert_spaces
@@ -440,6 +475,20 @@ class Handler():
             return self.prompt.format(str(image), str(answer))
         return self.prompt.format(str(image), str(question), str(answer))
 
+    def substitute_in_prompt_json(self, image, question, answer):
+        if question == None or len(question) == 0:
+            x = self.json_prompt.copy()
+            x['image'] = image
+            x['answer'] = answer
+            #print(x)
+            return x 
+        x = self.json_prompt.copy()
+        x['image'] = image
+        x['question'] = question
+        x['answer'] = answer
+        #print(x)
+        return x 
+
     def label_status_set(self):
         label = ""
         label += 'prompt:' + self.prompt_list[self.prompt_list_number]['label']
@@ -456,7 +505,13 @@ class Handler():
         label += 'count:' + str(self.associate_count)
         self.label_mix.set_text(label)
 
-    def glob_from_text_list(self, t):
+    def glob_from_text_list(self, t, use_json=False):
+        if use_json:
+            self.corpus_json = {x:[] for x in self.associate_list}
+        else:
+            self.corpus = { x:"" for x in self.associate_list }
+
+
         name = "../../"
 
         dialog = Gtk.FileChooserDialog("Please choose a name", None,
@@ -482,8 +537,11 @@ class Handler():
                 #print(i, assoc, folder)
                 for j in self.associate_list:
                     if j == assoc:
+                        #filetype = '.txt'
+                        #if use_json:
+                        #    filetype = '.json'
                         #self.corpus[assoc] = ""
-                        f = open( name + assoc + ".txt", 'w')
+                        #f = open( name + assoc + filetype, 'w')
                         li = []
                         li += glob.glob(folder + '/*.png')
                         li += glob.glob(folder + '/*.jpg')
@@ -498,15 +556,32 @@ class Handler():
                             my_art = AsciiArt.from_image(path=k)
                             sample = my_art.to_ascii(columns=self.width, monochrome=True )
                             sample = self.prep_sample_for_tokenizer(sample)
+                            
+                            if use_json:
+                                sample_out = self.substitute_in_prompt_json( sample, self.global_question, self.global_answer + ' ' + local_answer )
+                                self.corpus_json[assoc].append(sample_out)
+                            else:
+                                sample_out = self.substitute_in_prompt(sample, self.global_question, self.global_answer + ' ' + local_answer)
+                                self.corpus[assoc] += sample_out
 
-                            sample_out = self.substitute_in_prompt(sample, self.global_question, self.global_answer + ' ' + local_answer)
-                            self.corpus[assoc] += sample_out
                             self.corpus_count += 1
                         self.associate_count[assoc] = self.corpus_count
-                        
-                        f.write(self.corpus[assoc])
-                        f.close()
 
+                        if not use_json:
+                            filetype = '.txt'
+                            f = open( name + assoc + filetype, 'w')
+                        
+                            f.write(self.corpus[assoc])
+                            f.close()
+
+                        else:
+                            filetype = ".json"
+                            print(self.corpus_json)
+                            f = open( name + assoc + filetype, 'w' )
+                            f.write(json.dumps(self.corpus_json[assoc]))
+                            f.close()
+
+        self.corpus_json = { x:[] for x in self.associate_list }
         self.corpus = { x:"" for x in self.associate_list }
         self.label_mix_set()
 
@@ -515,6 +590,8 @@ class Handler():
         for i in sample.split("\n"):
             for j in i:
                 if j == " ":
+                    j = '.'
+                if j in ['"', "'"]:
                     j = '.'
                 if self.insert_spaces:
                     sample_out += j + ' '
