@@ -151,6 +151,9 @@ class Handler():
         self.button_prompt_edit = builder.get_object("button-prompt-edit")
         self.button_prompt_edit.connect('clicked', self.button_prompt_edit_clicked)
 
+        self.button_prompt_edit_json = builder.get_object("button-prompt-edit-json")
+        self.button_prompt_edit_json.connect('clicked', self.button_prompt_edit_json_clicked)
+
         self.button_compose_go = builder.get_object("button-compose-go")
         self.button_compose_go.connect('clicked', self.button_compose_go_clicked)
 
@@ -297,6 +300,14 @@ class Handler():
         if self.prompt_list_number >= len(self.prompt_list):
             self.prompt_list_number = 0         
         self.prompt = self.prompt_list[self.prompt_list_number]['text'] 
+        self.label_status_set()
+        print(button_in)
+
+    def button_prompt_edit_json_clicked(self, button_in):
+        self.json_prompt_list_number += 1 
+        if self.json_prompt_list_number >= len(self.json_prompt_list):
+            self.json_prompt_list_number = 0 
+        self.json_prompt = self.json_prompt_list[self.json_prompt_list_number]['text']
         self.label_status_set()
         print(button_in)
 
@@ -494,8 +505,8 @@ class Handler():
         label += 'prompt:' + self.prompt_list[self.prompt_list_number]['label']
         label += ' | '
         label += 'spacing:' + str(self.insert_spaces)
-        #label += ' | '
-        #label += 'count:' + str(self.corpus_count)
+        label += ' | '
+        label += 'json-prompt:' + self.json_prompt_list[self.json_prompt_list_number]['label']
         self.label_status.set_text(label)
         self.label_mix_set()
         pass
