@@ -489,7 +489,7 @@ class Handler():
     def substitute_in_prompt_json(self, image, question, answer):
         if question == None or len(question) == 0:
             x = self.json_prompt.copy()
-            x['image'] = image
+            x['question'] = image
             x['answer'] = answer
             #print(x)
             return x 
@@ -548,11 +548,7 @@ class Handler():
                 #print(i, assoc, folder)
                 for j in self.associate_list:
                     if j == assoc:
-                        #filetype = '.txt'
-                        #if use_json:
-                        #    filetype = '.json'
-                        #self.corpus[assoc] = ""
-                        #f = open( name + assoc + filetype, 'w')
+
                         li = []
                         li += glob.glob(folder + '/*.png')
                         li += glob.glob(folder + '/*.jpg')
@@ -580,6 +576,7 @@ class Handler():
 
                         if not use_json:
                             filetype = '.txt'
+                            print(self.corpus)
                             f = open( name + assoc + filetype, 'w')
                         
                             f.write(self.corpus[assoc])
