@@ -27,7 +27,7 @@ builder.add_from_file("test.glade")
 
 prompt_1 = { 
 'label' : "three-lines",
-
+'slots': 3,
 'text': """
 
 ### Image: 
@@ -41,7 +41,7 @@ prompt_1 = {
 
 prompt_2 = {
 'label' : "two-lines",
-
+'slots': 2,
 'text' : """
 
 ### Question:
@@ -54,6 +54,7 @@ prompt_2 = {
 
 json_prompt_1 = {
         'label' : 'json-three-lines',
+        'slots': 3,
         'text' : {
             'image': '{}',
             'question': '{}',
@@ -63,6 +64,7 @@ json_prompt_1 = {
 
 json_prompt_2 = {
         'label': 'json-two-lines',
+        'slots': 2,
         'text' : {
             'question': "{}",
             'answer': "{}"
@@ -482,14 +484,14 @@ class Handler():
         Gtk.main_quit()
 
     def substitute_in_prompt(self, image, question, answer):
-        if question == None or len(question) == 0:
-            return self.prompt.format(str(image), str(answer))
+        if self.prompt_list[self.prompt_list_number]['slots'] == 2:
+            return self.prompt.format(str(image) + str(question), str(answer))
         return self.prompt.format(str(image), str(question), str(answer))
 
     def substitute_in_prompt_json(self, image, question, answer):
-        if question == None or len(question) == 0:
+        if self.json_prompt_list[self.json_prompt_list_number]['slots'] == 2:
             x = self.json_prompt.copy()
-            x['question'] = image
+            x['question'] = image + question
             x['answer'] = answer
             #print(x)
             return x 
