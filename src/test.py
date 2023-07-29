@@ -71,6 +71,16 @@ json_prompt_2 = {
             }
         }
 
+json_prompt_3 = {
+        'label': 'json-three-lines-alpaca',
+        'slots': 3,
+        'text' : {
+            'input': '{}',
+            'instruction' : '{}',
+            'output': '{}'
+            }
+        }
+
 class Handler():
 
     def __init__(self):
@@ -87,7 +97,7 @@ class Handler():
         self.prompt_list_number = 0 
         self.prompt = self.prompt_list[self.prompt_list_number]['text']
 
-        self.json_prompt_list = [ json_prompt_1, json_prompt_2 ]
+        self.json_prompt_list = [ json_prompt_1, json_prompt_2, json_prompt_3 ]
         self.json_prompt_list_number = 0 
         self.json_prompt = self.json_prompt_list[self.json_prompt_list_number]['text']
 
@@ -494,6 +504,12 @@ class Handler():
             x['question'] = image + question
             x['answer'] = answer
             #print(x)
+            return x
+        elif self.json_prompt_list[self.json_prompt_list_number]['label'].endswith('alpaca'):
+            x = self.json_prompt.copy()
+            x['instruction'] = question
+            x['input'] = image
+            x['output'] = answer
             return x 
         x = self.json_prompt.copy()
         x['image'] = image
