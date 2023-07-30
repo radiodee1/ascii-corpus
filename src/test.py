@@ -126,7 +126,7 @@ class Handler():
 
         self.dots_csv_location = ""
         self.dots_png_location = ""
-        self.dots_sizes = [5, 50, 100, 1000]
+        self.dots_sizes = [5, 10, 50, 100, 1000]
         self.dots_types = ["0-9", "0-4", "5-9"]
         self.dots_sizes_number = 0 
         self.dots_types_number = 0 
