@@ -51,6 +51,20 @@ prompt_2 = {
 """
 }
 
+prompt_3 = {
+'label': 'three-lines-alpaca',
+'slots': 3,
+'text': '''
+
+Instruction:
+{}
+Input: 
+{}
+Output:
+{}
+'''
+
+        }
 
 json_prompt_1 = {
         'label' : 'json-three-lines',
@@ -93,12 +107,12 @@ class Handler():
 
         self.width = 40
         
-        self.prompt_list = [prompt_1, prompt_2] ## not used yet...
-        self.prompt_list_number = 0 
+        self.prompt_list = [prompt_1, prompt_2, prompt_3] ## not used yet...
+        self.prompt_list_number = len(self.prompt_list) - 1  
         self.prompt = self.prompt_list[self.prompt_list_number]['text']
 
         self.json_prompt_list = [ json_prompt_1, json_prompt_2, json_prompt_3 ]
-        self.json_prompt_list_number = 0 
+        self.json_prompt_list_number = len(self.json_prompt_list) - 1 
         self.json_prompt = self.json_prompt_list[self.json_prompt_list_number]['text']
 
         self.associate_list = ['train', 'test', 'validate']
@@ -194,6 +208,10 @@ class Handler():
         self.exit.connect("activate", self.menu_quit_clicked)
 
         self.compose_dots = builder.get_object('csv-top')
+
+        self.label_mix_set()
+        self.label_status_set()
+
 
     def button_add_clicked(self, button_in):
         # folder chooser here
@@ -496,6 +514,8 @@ class Handler():
     def substitute_in_prompt(self, image, question, answer):
         if self.prompt_list[self.prompt_list_number]['slots'] == 2:
             return self.prompt.format(str(image) + str(question), str(answer))
+        elif self.prompt_list[self.prompt_list_number]['label'].endswith('alpaca'):
+            return self.prompt.format(str(question), str(image), str(answer))
         return self.prompt.format(str(image), str(question), str(answer))
 
     def substitute_in_prompt_json(self, image, question, answer):
