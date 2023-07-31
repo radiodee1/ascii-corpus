@@ -426,10 +426,20 @@ class Handler():
         print(button_in)
         print(self.mechanical_generate_file_number, 'number from csv file.')
         pass
+
     def button_compose_go_auto_clicked(self, button_in):
-        self.edit_random = True
-        self.button_compose_go_clicked(button_in)
-        self.edit_random = False
+        if len(self.mechanical_lines) == 0 or self.mechanical_generate_file.strip() == "":
+            self.edit_random = True
+            self.button_compose_go_clicked(button_in)
+            self.edit_random = False
+            self.button_compose_go_auto.set_label(self.mechanical_generate_file.strip())
+        num = int(len(self.mechanical_lines) / 10 )
+        if num < 20:
+            num = len(self.mechanical_lines)
+        for _ in range(num):
+            self.edit_random = True
+            self.button_compose_go_clicked(button_in)
+            self.edit_random = False
         pass 
 
     def button_compose_csv_clicked(self, button_in):
