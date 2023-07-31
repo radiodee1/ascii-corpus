@@ -410,6 +410,8 @@ class Handler():
         label_num = label_num.split('.')[0]
         label_num = label_num.split('_')[-1]
 
+        self.mechanical_numbers[int(label_num)] = 1 
+
         
         self.button_compose_go.set_label('png-editor|' + str(label_num)
                                          + '/' + str(len(self.mechanical_lines)))
