@@ -395,7 +395,7 @@ class Handler():
             #count += 1 
             self.mechanical_generate_file_number += 1 
             
-        if self.mechanical_generate_file_number >= len(self.mechanical_lines):
+        if self.mechanical_generate_file_number > len(self.mechanical_lines):
             return
 
         if len(png_name.strip()) == 0:
