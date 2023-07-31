@@ -78,8 +78,10 @@ def main():
                 pygame.draw.rect(screen, 'red',  [down1, down2, down3, down4] )
                 #print(i, 'red')
 
-        pygame.display.set_caption(sys.argv[-1].split('/')[-1])
-        pygame.display.flip() 
+        pygame.display.set_caption(sys.argv[1].split('/')[-1])
+        pygame.display.flip()
+        if len(sys.argv) > 2:
+            running = False
     
     print(sys.argv)
     num = sys.argv[1].split(".")[-2]

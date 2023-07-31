@@ -345,6 +345,9 @@ class Handler():
         print(button_in)
 
     def button_compose_go_clicked(self, button_in):
+        #self.button_compose_go.set_label('png-editor|' + str(self.mechanical_generate_file_number)
+        #                                 + '/' + str(len(self.mechanical_lines)))
+
         if self.mechanical_generate_file.strip() == "" and len(self.mechanical_lines) == 0:
          # folder chooser here
             dialog = Gtk.FileChooserDialog("Please choose a file", None,
@@ -398,7 +401,19 @@ class Handler():
         if len(png_name.strip()) == 0:
             self.mechanical_generate_file_number += 1 
             return 
-         
+        
+        #self.button_compose_go.set_label('png-editor|' + str(self.mechanical_generate_file_number)
+        #                                 + '/' + str(len(self.mechanical_lines)))
+        #print(self.mechanical_generate_file_number + 1, 'number plus one')
+
+        label_num = png_name.strip().split('/')[-1]
+        label_num = label_num.split('.')[0]
+        label_num = label_num.split('_')[-1]
+
+        
+        self.button_compose_go.set_label('png-editor|' + str(label_num)
+                                         + '/' + str(len(self.mechanical_lines)))
+ 
         name = png_name
         if self.edit_random == True:
             name += " --RANDOM"
