@@ -56,11 +56,11 @@ prompt_3 = {
 'slots': 3,
 'text': '''
 
-Instruction:
+##Instruction:
 {}
-Input: 
+##Input: 
 {}
-Output:
+##Output:
 {}
 '''
 
