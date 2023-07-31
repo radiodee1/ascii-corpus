@@ -102,7 +102,7 @@ class Handler():
         self.source_list = []
         self.preview_url = ""
         self.insert_spaces = True
-        #self.corpus = ""
+        self.edit_random = False
         self.corpus_count = 0
 
         self.width = 40
@@ -182,6 +182,9 @@ class Handler():
 
         self.button_compose_go = builder.get_object("button-compose-go")
         self.button_compose_go.connect('clicked', self.button_compose_go_clicked)
+
+        self.button_compose_go_auto = builder.get_object("button-compose-go-auto")
+        self.button_compose_go_auto.connect('clicked', self.button_compose_go_auto_clicked)
 
         self.button_compose_csv = builder.get_object("button-compose-csv")
         self.button_compose_csv.connect('clicked', self.button_compose_csv_clicked)
@@ -397,6 +400,8 @@ class Handler():
             return 
          
         name = png_name
+        if self.edit_random == True:
+            name += " --RANDOM"
         if png_name.strip().endswith(".png"):
             os.system("python3 compose.py " + name)
 
@@ -404,6 +409,11 @@ class Handler():
         print(button_in)
         print(self.mechanical_generate_file_number, 'number from csv file.')
         pass
+    def button_compose_go_auto_clicked(self, button_in):
+        self.edit_random = True
+        self.button_compose_go_clicked(button_in)
+        self.edit_random = False
+        pass 
 
     def button_compose_csv_clicked(self, button_in):
         #self.compose_dots.show_all()
