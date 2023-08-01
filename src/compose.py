@@ -75,7 +75,7 @@ def main():
                 down2 -= square_size / 2
                 down3 = square_size
                 down4 = square_size
-                pygame.draw.rect(screen, 'red',  [down1, down2, down3, down4] )
+                pygame.draw.rect(screen, 'black',  [down1, down2, down3, down4] )
                 #print(i, 'red')
 
         pygame.display.set_caption(sys.argv[1].split('/')[-1])
