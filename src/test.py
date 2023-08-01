@@ -568,7 +568,7 @@ class Handler():
         elif self.json_prompt_list[self.json_prompt_list_number]['label'].endswith('alpaca'):
             x = self.json_prompt.copy()
             x['instruction'] = question
-            x['input'] = 'drawing:\n```' + image + '```'
+            x['input'] = 'drawing:\n```\n' + image + '```'
             x['output'] = answer
             return x 
         x = self.json_prompt.copy()
