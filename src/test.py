@@ -151,7 +151,7 @@ class Handler():
         self.mechanical_lines = []
         self.mechanical_numbers = []
 
-        self.global_question = "How many dots are there?"
+        self.global_question = "How many shapes are there?"
         self.global_answer = "There are"
 
         self.text_sources = builder.get_object("text-sources")
