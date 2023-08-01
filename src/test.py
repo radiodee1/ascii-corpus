@@ -18,7 +18,8 @@ from ascii_magic import AsciiArt, Front, Back, from_image
 import glob
 import os
 import random
-import json 
+import json
+#import copy
 
 builder = Gtk.Builder()
 builder.add_from_file("test.glade")
@@ -56,14 +57,14 @@ prompt_3 = {
 'slots': 3,
 'text': '''
 
-##Instruction:
+### Instruction:
 {}
-##Input:
+### Input:
 drawing:
 ```
 {}
 ```
-##Output:
+### Output:
 {}
 '''
 
@@ -98,6 +99,17 @@ json_prompt_3 = {
             }
         }
 
+json_prompt_4 = {
+        'label': 'json-three-new-alpaca',
+        'slots': 3,
+        'text' : {
+            'input': '### Input: \ndrawing\n```{}\n```',
+            'instruction' : '### Instruction: \n{}',
+            'output': '### Output: \n{}'
+            }
+        }
+
+
 class Handler():
 
     def __init__(self):
@@ -114,7 +126,7 @@ class Handler():
         self.prompt_list_number = len(self.prompt_list) - 1  
         self.prompt = self.prompt_list[self.prompt_list_number]['text']
 
-        self.json_prompt_list = [ json_prompt_1, json_prompt_2, json_prompt_3 ]
+        self.json_prompt_list = [ json_prompt_1, json_prompt_2, json_prompt_3, json_prompt_4 ]
         self.json_prompt_list_number = len(self.json_prompt_list) - 1 
         self.json_prompt = self.json_prompt_list[self.json_prompt_list_number]['text']
 
@@ -561,15 +573,17 @@ class Handler():
     def substitute_in_prompt_json(self, image, question, answer):
         if self.json_prompt_list[self.json_prompt_list_number]['slots'] == 2:
             x = self.json_prompt.copy()
-            x['question'] = image + question
-            x['answer'] = answer
+            x['question'] = x['question'].format( image + question)
+            x['answer'] = x['answer'].format(answer)
             #print(x)
             return x
         elif self.json_prompt_list[self.json_prompt_list_number]['label'].endswith('alpaca'):
             x = self.json_prompt.copy()
-            x['instruction'] = question
-            x['input'] = 'drawing:\n```\n' + image + '```'
-            x['output'] = answer
+            #x = copy.copy(self.json_prompt)
+            x['instruction'] = x['instruction'].format(question) # = question
+            x['input'] = x['input'].format(image) # = 'drawing:\n```\n' + image + '```'
+            x['output'] = x['output'].format(answer) # = answer
+            print(x, 'check here')
             return x 
         x = self.json_prompt.copy()
         x['image'] = image
