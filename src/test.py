@@ -19,7 +19,6 @@ import glob
 import os
 import random
 import json
-#import copy
 
 builder = Gtk.Builder()
 builder.add_from_file("test.glade")
