@@ -60,10 +60,8 @@ prompt_3 = {
 ### Instruction:
 {}
 ### Input:
-drawing:
 ```
-{}
-```
+{}```
 ### Output:
 {}
 '''
@@ -103,9 +101,9 @@ json_prompt_4 = {
         'label': 'json-three-new-alpaca',
         'slots': 3,
         'text' : {
-            'input': '### Input: \ndrawing\n```{}\n```',
-            'instruction' : '### Instruction: \n{}',
-            'output': '### Output: \n{}'
+            'input': '```{}```',
+            'instruction' : '{}',
+            'output': '{}'
             }
         }
 
