@@ -148,7 +148,7 @@ class Handler():
         self.mechanical_lines = []
         self.mechanical_numbers = []
 
-        self.global_question = "How many shapes are there?"
+        self.global_question = "Count how many shapes are there?"
         self.global_answer = "There are"
 
         self.text_sources = builder.get_object("text-sources")
@@ -296,7 +296,7 @@ class Handler():
 
             sample = self.prep_sample_for_tokenizer(sample)
             
-            sample_out = self.substitute_in_prompt(sample, 'How many dots are there', 'there are two')
+            sample_out = self.substitute_in_prompt(sample, 'How many dots are there', 'test output')
 
             self.text_preview.get_buffer().set_text(sample_out)
             self.preview_url = dialog.get_filename()
