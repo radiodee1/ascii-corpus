@@ -357,8 +357,6 @@ class Handler():
         print(button_in)
 
     def button_compose_go_clicked(self, button_in):
-        #self.button_compose_go.set_label('png-editor|' + str(self.mechanical_generate_file_number)
-        #                                 + '/' + str(len(self.mechanical_lines)))
 
         if self.mechanical_generate_file.strip() == "" and len(self.mechanical_lines) == 0:
          # folder chooser here
@@ -384,10 +382,12 @@ class Handler():
             for i in lines:
                 if len(i.split(',')) < 2:
                     f.close()
+                    print('end here')
                     return
                 self.mechanical_lines.append(i.split(',')[0])
                 self.mechanical_numbers.append(int(i.split(',')[1]))
             f.close()
+            #return
 
         #self.mechanical_generate_file_number += 1 
         num = 0
@@ -411,20 +411,16 @@ class Handler():
             return
 
         if len(png_name.strip()) == 0:
-            self.mechanical_generate_file_number += 1 
+            self.mechanical_generate_file_number += 1
+            print(png_name, self.mechanical_generate_file_number)
             return 
         
-        #self.button_compose_go.set_label('png-editor|' + str(self.mechanical_generate_file_number)
-        #                                 + '/' + str(len(self.mechanical_lines)))
-        #print(self.mechanical_generate_file_number + 1, 'number plus one')
-
         label_num = png_name.strip().split('/')[-1]
         label_num = label_num.split('.')[0]
         label_num = label_num.split('_')[-1]
 
         self.mechanical_numbers[int(label_num)] = 1 
 
-        
         self.button_compose_go.set_label('png-editor|' + str(label_num)
                                          + '/' + str(len(self.mechanical_lines)))
  
@@ -432,7 +428,8 @@ class Handler():
         if self.edit_random == True:
             name += " --RANDOM"
         if png_name.strip().endswith(".png"):
-            os.system("python3 compose.py " + name)
+            cmd = os.system("python3 compose.py " + name)
+            print(cmd, 'compose', len(self.mechanical_lines))
 
         #self.mechanical_generate_file_number += 1  ## sneaky??
         print(button_in)
@@ -445,8 +442,13 @@ class Handler():
             self.button_compose_go_clicked(button_in)
             self.edit_random = False
             self.button_compose_go_auto.set_label(self.mechanical_generate_file.strip())
+        if len(self.mechanical_lines) <= 1:
+            print(self.mechanical_lines)
+            #exit()
         num = int(len(self.mechanical_lines) / 10 )
-        if num < 20:
+        print(num, 'num')
+        #exit()
+        if num < 1000:
             num = len(self.mechanical_lines)
         for _ in range(num):
             self.edit_random = True
