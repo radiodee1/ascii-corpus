@@ -625,7 +625,7 @@ class Handler():
         if response == Gtk.ResponseType.OK:
             #print("Open clicked "+ str(button_in))
             print("File selected: " + dialog.get_filename())
-            name = dialog.get_filename() + "."
+            name = dialog.get_filename() + "_"
         elif response == Gtk.ResponseType.CANCEL:
             print("Cancel clicked")
         dialog.destroy()
