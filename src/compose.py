@@ -14,8 +14,8 @@ def main():
     pygame.display.set_caption("minimal program")
     
     square_size = 30 
-    size_x = 340 
-    size_y = 280 
+    size_x = 540 
+    size_y = 480 
     # create a surface on screen that has the size of 240 x 180
     screen = pygame.display.set_mode((size_x,size_y))
     screen.fill('white') 
@@ -39,7 +39,7 @@ def main():
             for prev in objects:
                 p_x = prev[0]
                 p_y = prev[1]
-                square_size_plus = square_size * 2
+                square_size_plus = square_size * 2 * 2 
 
                 span_x = [ i for i in range(p_x - square_size_plus , p_x + square_size_plus ) ]
                 span_y = [ i for i in range(p_y - square_size_plus , p_y + square_size_plus ) ]

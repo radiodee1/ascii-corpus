@@ -316,7 +316,7 @@ class Handler():
 
             sample = self.prep_sample_for_tokenizer(sample)
             
-            sample_out = self.substitute_in_prompt(sample, self.global_question, 'there are two')
+            sample_out = self.substitute_in_prompt(sample, self.global_question, 'test output')
             self.text_preview.get_buffer().set_text(sample_out)
         pass
 
