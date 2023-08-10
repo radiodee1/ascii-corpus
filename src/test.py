@@ -281,7 +281,7 @@ class Handler():
 
     def button_preview_clicked(self, button_in):
          # folder chooser here
-        dialog = Gtk.FileChooserDialog("Please choose a file", None,
+        dialog = Gtk.FileChooserDialog("Please choose a preview png file", None,
             Gtk.FileChooserAction.OPEN,
             #Gtk.FileChooserAction.SELECT_FOLDER,
             (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
@@ -362,7 +362,7 @@ class Handler():
 
         if self.mechanical_generate_file.strip() == "" and len(self.mechanical_lines) == 0:
          # folder chooser here
-            dialog = Gtk.FileChooserDialog("Please choose a file", None,
+            dialog = Gtk.FileChooserDialog("Please choose a csv file", None,
                 Gtk.FileChooserAction.OPEN,
                 #Gtk.FileChooserAction.SELECT_FOLDER,
                 (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
@@ -606,15 +606,17 @@ class Handler():
         self.label_mix.set_text(label)
 
     def glob_from_text_list(self, t, use_json=False):
+        window_label = 'TXT'
         if use_json:
             self.corpus_json = {x:[] for x in self.associate_list}
+            window_label = 'JSON'
         else:
             self.corpus = { x:"" for x in self.associate_list }
-
+            window_label = 'TXT'
 
         name = "../../"
 
-        dialog = Gtk.FileChooserDialog("Please choose a name", None,
+        dialog = Gtk.FileChooserDialog("Please choose a " + window_label + " CSV name", None,
             Gtk.FileChooserAction.SAVE,
             #Gtk.FileChooserAction.SELECT_FOLDER,
             (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
