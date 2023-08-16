@@ -150,6 +150,7 @@ class Handler():
 
         self.global_question = "Count how many shapes are there?"
         self.global_answer = "There are"
+        self.global_box = True
 
         self.text_sources = builder.get_object("text-sources")
         self.text_preview = builder.get_object("text-preview")
@@ -200,6 +201,9 @@ class Handler():
 
         self.button_compose_csv = builder.get_object("button-compose-csv")
         self.button_compose_csv.connect('clicked', self.button_compose_csv_clicked)
+
+        self.button_compose_clear = builder.get_object("button-compose-clear")
+        self.button_compose_clear.connect('clicked', self.button_compose_clear_clicked)
 
         self.dots_csv_cancel = builder.get_object("button-compose-csv-cancel")
         self.dots_csv_cancel.connect('clicked', self.dots_csv_cancel_clicked)
@@ -456,6 +460,12 @@ class Handler():
             self.edit_random = False
         pass 
 
+    def button_compose_clear_clicked(self, button_in):
+        self.mechanical_generate_file = ""
+        self.mechanical_lines = "" 
+        print(button_in)
+
+
     def button_compose_csv_clicked(self, button_in):
         #self.compose_dots.show_all()
         self.compose_dots = builder.get_object('csv-top')
@@ -687,9 +697,18 @@ class Handler():
         self.label_mix_set()
 
     def prep_sample_for_tokenizer(self, sample):
+        if self.global_box:
+            end_char = '|\n'
+            start_char = '| '
+        else:
+            end_char = '\n'
+            start_char = ''
         sample_out = ""
         for i in sample.split("\n"):
+            sample_out += start_char
             for j in i:
+                if j == '|':
+                    j = '+'
                 if j == " ":
                     j = '.'
                 if j in ['"', "'"]:
@@ -698,7 +717,7 @@ class Handler():
                     sample_out += j + ' '
                 else:
                     sample_out += j 
-            sample_out += '\n'
+            sample_out += end_char #'\n'
         return sample_out
 
     def prep_csv_for_dots(self):

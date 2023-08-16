@@ -322,8 +322,8 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="button-compose-mnist">
-                    <property name="label" translatable="yes">process-mnist</property>
+                  <object class="GtkButton" id="button-compose-clear">
+                    <property name="label" translatable="yes">process-clear</property>
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="receives-default">True</property>
