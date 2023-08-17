@@ -26,4 +26,22 @@ It's not known if lists are used internally in Large Language Models. It's not k
 
 It might be that the lists' values are simply close to each other. Their output might be similarly close to each other in a different dimension. It is easiest to immagine this in a 2 dimensional grid. In the vertical direction list items are saved. In the horizontal direction items in the list are connected to outputs. These outputs could be full words in this example but might be anything at all. Ultimately one could consider this arrangement in dimensions higher than two. 
 
+## Training 
 
+Does a model, even in the two dimensional example, learn by moving items farther apart from each other or does it place boundaries between items or concepts? It's not clear, but maybe examples should be presented.
+
+Imagine a Scrabble board for this example. In regular Scrabble words start at some point on the board and proceed to the 'right' or in the 'down' direction. For this example we need words to start at a spot and proceed in the 'up' and 'left' direction also. In this example a word starts in some location and proceeds to it's end. Then up to three words can spring up at the tail of the word in question. The mechanism for a word to build a list at its termination and the later choosing from some part of that list remains unknown, but clearly there can only be three items in a list that is formed at the end of a word. There is no distance measurement in this scheme, and there are not boundaries erected between words or concepts.
+
+In a different example, again using a Scrabble board, initial words start at the left margin of the board and only move in the 'right' direction. Subsequent lists start at the end of an initial word. Initial words are separated by spaces. They always start at the leftmost of the board. Words in the initial list are separated vertically by a space that allows the second sublist to exist. The distance between the members of the primary list is determined by the length of the list attached to the end of each primary member.
+
+In another example, again using a Scrabble board, words are placed randomly on the board, never with regard to other words. The only rule is that no word destroys any other word. Words do not overlap. Some mechanism is used to identify words and to select words or letters for output, but it is unkown how it works. Somehow the model goes from one word to another, and there may be a complex relationship here. It could be a distance calculation. There could be a multiple dimensionality to this example, and there is also a limit to how many words can be chosen from. 
+
+This last example generalizes to one where multiple dimensions are mandatory to the discussion. Words or concepts exist in a large multiple dimension space. During training these words are moved away from each other in some dimensions and remain close to each other in other dimensions. The mechanism for choosing a item in a list is unkown.
+
+Imagine a network with many remembered words. In order to allow one to lead to another the words might be close to each other. Then to dissacociate words or concepts we can either move the words apart or make some kind of barrier between words that cuts off their exchange. We don't know which is which.
+
+There are easily other ways of visualizing how Large Language Models work. 
+
+Is the process of building knowledge one where walls are built up between unrelated concepts, or is it a process of moving the concepts away from each other? The answer is not obvious. In the latter, with the possibility of many many dimensions, moving words farther from each other seems likely. In the former, building walls between objects seems to be wasteful. Some node needs to be sacrificed for another two nodes to be separated from each other. This last note seems unintuitive, but in the overfit gpt2 model above there is a tendency for fewer words in the set of outputs after overfitting than before. Maybe these words dissapear when they are converted to use as walls.
+
+On the other hand, maybe distances are increased so much during a training proceedure that only a very few words are in a close enough relationship to each other that they can follow each other.
