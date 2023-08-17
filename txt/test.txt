@@ -1,0 +1,29 @@
+# Searching for Logical Ability in Large Language Models
+
+This paper hopes to offer an explanation for some of the way that Large Language Models work. The paper does not offer proof, but rather a suggestion on how to think about transformer models.
+
+## Small (Large) Language Models
+
+There is something to observe when using models like gpt2 as a chatbot. If the models are overfit, if training goes on for too long, the models behave differently. They use a very small set of responses for all querys. If the models are trained for too long, they converge on a single sentence. In this example we will say that the model converged on the sentence "I don't know." The reason for this is that the phrase "I don't know" can be used as an answer for many questions. 
+
+During training, before the massive overfitting, the model starts to limit it's replies drastically. At the start you can imagine replies of many kinds, but after a while, a while of overfitting, the output can be limited to a short list. The list has several entries and the number of entries goes down as the overfitting goes on. At some point the list can be very short. It consists of answers that apply very well to many inputs. Something like "I don't know" might be at the top of the list. You might find simple options like "Yes" and "No". 
+
+## Lists 
+
+What kind of lists are they? Are they like computer lists with indexes? Are they like linked lists? Are they heirarchical, like binary trees? Might there be a structure like a dictionary with keys and values? It would be helpful to have a definition or analogy for these lists.
+
+The list that would be best is the tree, because it would be ordered with important replies at the top. Next might be the dictionary, followed by a linked list. There is not much evidence for any of these. There might be a dictionary relationship, but a tree would require some kind of index, as would a regular indexed list. There's not much evidence of an index anywhere. 
+
+It might be that there is a list structure somewhere with empty spaces in it waiting for entries to be assigned. The entries are just close to each other. The thing that makes it a list is the proximity.
+
+In the example the lists that are described in the overfitting of the gpt2 model are the output of the model. It is proposed that while overfitting the model the model shows it's inteligence. The items in the model themselves are not inteligent, but the making of the list, deciding where a given sentence belongs in the list, is smart. In this way even small models can show inteligence.
+
+There is also an issue of input versus output. The list that we show above with the simple replies in a chatbot situation is an output list. One can also talk about internal lists, where a list inside the model exists that contains topics or concepts that are related. 
+
+For example there are concepts of numbers. Speaking about the integers smaller than 10, there might be, for instance, special concepts for numbers like "1" and "2". These numbers can be used to mark text in paragraphs and can also be used for simple mathematical manipulation. "2" might also have special meaning with respect to the concept of a "pair". The word "pair" might need to be associated with the number "2" at times. This would give the digit "2" special meaning and also more than one meaning. Internally there might be a list for concepts around the number 2.
+
+It's not known if lists are used internally in Large Language Models. It's not known how the input from a word is changed into a word of output. If there were lists in use, how would an item in a list be used? Would it be chosen somehow and would it somehow key a particular response? Would there be lists of lists? Wouldn't this be like the key/value dictionary mentioned above? 
+
+It might be that the lists' values are simply close to each other. Their output might be similarly close to each other in a different dimension. It is easiest to immagine this in a 2 dimensional grid. In the vertical direction list items are saved. In the horizontal direction items in the list are connected to outputs. These outputs could be full words in this example but might be anything at all. Ultimately one could consider this arrangement in dimensions higher than two. 
+
+
