@@ -2,27 +2,37 @@
 
 # 2023 08 07
 TheBloke/Llama-2-7B-fp16
+
 lora_05
+
 160 mins
 
 ---
 
 # 2023 08 08 
+
 TheBloke/Llama-2-13B-chat-GPTQ:gptq-8bit-128g-actorder_False
+
 LoRA training with GPTQ models requires loading with --monkey-patch .
 
 ---
 
 # 2023 08 09
+
 TheBloke/Llama-2-13B-fp16
+
 Try this model with --load-in-8bit and see how long training is supposed to take.
+
 5h12m
+
 Note: this crashed around 4 hours
 
 ---
 
 # 2023 08 12 - Saturday
+
 TheBloke/Llama-2-13B-fp16
+
 runpod.io - A40 - 48GB VRAM - approx $0.79/hr 
 
 Try this model with '--load-in-8bit' and larger rank and smaller corpus. See how long training is supposed to take.
@@ -58,7 +68,9 @@ folder contents:
 ---
 
 # 2023 08 15 - Tuesday
+
 TheBloke/Llama-2-13B-fp16 
+
 runpod.io - A6000 - 48GB VRAM - approx $0.79/hr 
 
 use:
@@ -81,7 +93,9 @@ training would change the output.
 ---
 
 # 2023 08 18 - Friday
+
 TheBloke/Llama-2-13B-fp16 
+
 runpod.io - A6000 - 48GB VRAM - approx $0.79/hr 
 
 use:
@@ -123,7 +137,9 @@ to level off.
 ---
 
 # 2023 08 20 - Sunday
+
 TheBloke/Llama-2-13B-fp16 
+
 runpod.io - A6000 - 48GB VRAM - approx $0.79/hr 
 
 use:
