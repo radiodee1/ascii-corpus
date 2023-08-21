@@ -155,7 +155,7 @@ use:
 
 note:
 
-I should have $4.76 left in my account.
+I should have $4.76 left in my account. Add $10.00 to account.
 Try expanded LoRA rank. Make sure to activate tensorboard data collection.
 
 1. download model in oobabooga. load model with --load-in-8bit option.
@@ -170,4 +170,9 @@ Try expanded LoRA rank. Make sure to activate tensorboard data collection.
 10. move lora_xx zip to local computer using runpodctl.
 11. test lora_xx zip folder with tensorboard.
 
+Do training twice. Examine tensorboard graph of loss. Graph shows loss leveling off 
+at second epoch but output from testing does not improve massively. runpodctl does not
+work well for large downloads and the lora_xx zip download is 1.5 GB. Setup Google Cloud
+service so that lora rank can be expanded further. Next time try lora rank of 1024.
 
+/workspace/text-generation-webui/loras
