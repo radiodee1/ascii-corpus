@@ -151,6 +151,7 @@ class Handler():
         self.global_question = "Count how many shapes are there?"
         self.global_answer = "There are"
         self.global_box = True
+        self.global_string_replace = "."
 
         self.text_sources = builder.get_object("text-sources")
         self.text_preview = builder.get_object("text-preview")
@@ -704,7 +705,15 @@ class Handler():
             end_char = '\n'
             start_char = ''
         sample_out = ""
+        num = 0 
+        s = 'X'
         for i in sample.split("\n"):
+            if num == 0:
+                symbol_list = i 
+                counted = [ (symbol_list.count(x), x) for x in symbol_list ] 
+                counted.sort(key= lambda x: x[0], reverse=True)
+                #print(counted)
+                s = counted[0][1]
             sample_out += start_char
             for j in i:
                 if j == '|':
@@ -713,10 +722,14 @@ class Handler():
                     j = '.'
                 if j in ['"', "'"]:
                     j = '.'
+                if j == s:
+                    j = self.global_string_replace
+
                 if self.insert_spaces:
                     sample_out += j + ' '
                 else:
                     sample_out += j 
+            num += 1 
             sample_out += end_char #'\n'
         return sample_out
 
