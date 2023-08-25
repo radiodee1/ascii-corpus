@@ -463,7 +463,7 @@ class Handler():
 
     def button_compose_clear_clicked(self, button_in):
         self.mechanical_generate_file = ""
-        self.mechanical_lines = "" 
+        self.mechanical_lines = [] 
         print(button_in)
 
 
