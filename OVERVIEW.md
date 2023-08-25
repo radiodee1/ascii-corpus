@@ -213,7 +213,7 @@ Try expanded LoRA rank. Make sure to activate tensorboard data collection.
 9. Examine output in Google Cloud. Download LoRAs. 
 10. After training, prune checklists from lora folder. Look in Google Cloud.
 11. zip remaining lora folder.
-12. move lora_xx zip to local computer using runpodctl.
+12. move lora_xx zip to local computer using Google Cloud.
 13. test lora_xx zip folder with tensorboard.
 
 Do training twice. Examine tensorboard graph of loss. Graph shows loss leveling off 
