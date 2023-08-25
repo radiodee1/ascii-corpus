@@ -176,3 +176,49 @@ work well for large downloads and the lora_xx zip download is 1.5 GB. Setup Goog
 service so that lora rank can be expanded further. Next time try lora rank of 1024.
 
 /workspace/text-generation-webui/loras
+
+---
+
+# 2023 08 26 - Saturday
+
+TheBloke/Llama-2-13B-fp16 
+
+runpod.io - A6000 - 48GB VRAM - approx $0.79/hr 
+
+use:
+
+- epochs: 1
+- auto-save: 75 steps
+- input-token cutoff: 750
+- lora-rank: 768 units 
+- lora-alpha: 1536 units 
+- visualization using: tensorboard
+- corpus length: 3,000 examples
+- training time approx 2h00mins
+- runpod.io local folder path: /workspace/text-generation-webui/loras
+
+note:
+
+I should have $4.76 left in my account. Add $10.00 to account.
+Try expanded LoRA rank. Make sure to activate tensorboard data collection.
+
+1. download model in oobabooga. load model with --load-in-8bit option.
+2. move prompts from local computer using runpodctl. Put them in the right folder.
+3. move training data from local computer using runpodctl. Put them in the right folder.
+4. Connect running instance to Google Cloud. Note local and remote folder name. Input api json file.
+5. Call LoRA 'lora_xx'.
+6. set all controls as noted above.
+7. start training.
+8. After training, test model with prompts. Does it work better?
+9. Examine output in Google Cloud. Download LoRAs. 
+10. After training, prune checklists from lora folder. Look in Google Cloud.
+11. zip remaining lora folder.
+12. move lora_xx zip to local computer using runpodctl.
+13. test lora_xx zip folder with tensorboard.
+
+Do training twice. Examine tensorboard graph of loss. Graph shows loss leveling off 
+at second epoch but output from testing does not improve massively. runpodctl does not
+work well for large downloads and the lora_xx zip download is 1.5 GB. Setup Google Cloud
+service so that lora rank can be expanded further. Next time try lora rank of 768.
+
+/workspace/text-generation-webui/loras
