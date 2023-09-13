@@ -179,7 +179,7 @@ service so that lora rank can be expanded further. Next time try lora rank of 10
 
 ---
 
-# 2023 08 26 - Saturday
+# 2023 09 13 - Wednesday
 
 TheBloke/Llama-2-13B-fp16 
 
@@ -188,7 +188,7 @@ runpod.io - A6000 - 48GB VRAM - approx $0.79/hr
 use:
 
 - epochs: 1
-- auto-save: 75 steps
+- auto-save: 0 (formerly 75 steps)
 - input-token cutoff: 750
 - lora-rank: 768 units 
 - lora-alpha: 1536 units 
@@ -221,4 +221,10 @@ at second epoch but output from testing does not improve massively. runpodctl do
 work well for large downloads and the lora_xx zip download is 1.5 GB. Setup Google Cloud
 service so that lora rank can be expanded further. Next time try lora rank of 768.
 
+Google Cloud Path:
+
 /workspace/text-generation-webui/loras
+
+Output:
+
+Google Cloud was too difficult to set up. Output was also generally poor.
