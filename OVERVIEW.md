@@ -219,7 +219,7 @@ Try expanded LoRA rank. Make sure to activate tensorboard data collection.
 Do training twice. Examine tensorboard graph of loss. Graph shows loss leveling off 
 at second epoch but output from testing does not improve massively. runpodctl does not
 work well for large downloads and the lora_xx zip download is 1.5 GB. Setup Google Cloud
-service so that lora rank can be expanded further. Next time try lora rank of 768.
+service so that lora rank can be expanded further. Make sure to try lora rank of 768.
 
 Google Cloud Path:
 
