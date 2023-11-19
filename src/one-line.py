@@ -61,12 +61,15 @@ class Generate:
             j = i % self.integers
             k = self.get_from_bag(i, j)
             # format string 
-            jk = [ 'O' for _ in range(k) ]
-            jk = '[' + ','.join(jk) + ']'
+            if self.large:
+                jk = self.get_large_string(k)
+            else:
+                jk = [ 'O' for _ in range(k) ]
+                jk = '[' + ','.join(jk) + ']'
             # put string in json 
             q = "How many O symbols are inside these brackets?"
             t = jk 
-            a = k
+            a = str(k)
             if self.prompt:
                 m = self.substitute_in_text(q, t, '')
                 self.list.append([m, k])
@@ -100,12 +103,29 @@ class Generate:
             f.write(json.dumps(self.list) )
             f.close()
 
+    def get_large_string(self, k):
+        j = [ 0 for _ in range(self.lines + 5) ]
+        num = 0
+        while num < 1000 and j.count(1) < k:
+            x = random.randint(0, len(j) - 1)
+            j[x] = 1 
+            num += 1
+        jj = []
+        for i in j:
+            if i == 1:
+                jj.append('0')
+            else:
+                jj.append('.')
+        #jj = [ '0' for i in j if i == 1  ]
+        jj = '[' + ','.join(jj) + ']'
+        print(jj, k)
+        return jj 
 
 
 if __name__ == '__main__':
     g = Generate()
     parser = argparse.ArgumentParser(description="One Line", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--name', default='./../../construct-one-line', help='name for "construct" output file.')
+    parser.add_argument('--name', default='./../../one-line-dots', help='name for "construct" output file.')
     parser.add_argument('--verbose', action="store_true", help="print verbose output.")
     parser.add_argument('--lines', default=100, help='number of examples.')
     parser.add_argument('--prompt', action="store_true", help="output prompt files.")
@@ -122,8 +142,14 @@ if __name__ == '__main__':
 
     g.bag = [ i for i in range(g.integers) ]
 
+    if g.large:
+        g.name += '-large'
+
     if args.prompt:
         g.lines = 10 
+        g.name += '-prompt'
+    else:
+        g.name += '-train'
 
     #g.test_output()
     if g.verbose:
