@@ -71,12 +71,14 @@ class Generate:
             else:
                 m = self.substitute_in_json(q, t, a)
             self.list.append(m)
-            print(k)
+            if self.verbose:
+                print(k)
 
     def get_from_bag(self, line, position):
-        print(line + 1, self.bag)
+        if self.verbose:
+            print(line + 1, self.bag)
         x = 0
-        if position is 0:
+        if position == 0:
             self.bag = [ i for i in range(self.integers) ]
         if len(self.bag) > 0:
             x = random.choice(self.bag)
@@ -108,10 +110,11 @@ if __name__ == '__main__':
         g.lines = 10 
 
     #g.test_output()
-    x = g.substitute_in_json('help', 'me', 'out')
-    y = g.substitute_in_text('help', 'me', 'out')
-    print(x)
-    print(y)
+    if g.verbose:
+        x = g.substitute_in_json('help', 'me', 'out')
+        y = g.substitute_in_text('help', 'me', 'out')
+        print(x)
+        print(y)
     g.main_loop()
 
     print(g.list)
