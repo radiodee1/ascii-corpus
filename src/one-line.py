@@ -1,6 +1,8 @@
 #!/bin/env python3 
+
 import argparse
 import random
+import json
 
 json_prompt = {
         'label': 'json-three-lines-alpaca',
@@ -21,8 +23,7 @@ text_prompt = {
 ### Instruction:
 {}
 ### Input:
-```
-{}```
+{}
 ### Output:
 {}
 '''
@@ -67,10 +68,11 @@ class Generate:
             t = jk 
             a = k
             if self.prompt:
-                m = self.substitute_in_text(q, t, a)
+                m = self.substitute_in_text(q, t, '')
+                self.list.append([m, k])
             else:
                 m = self.substitute_in_json(q, t, a)
-            self.list.append(m)
+                self.list.append(m)
             if self.verbose:
                 print(k)
 
@@ -85,15 +87,29 @@ class Generate:
             self.bag.remove(x)
         return x 
 
+    def file_loop(self):
+        if self.prompt:
+            for i in self.list:
+                f = open(self.name + '_' + str(i[1]) + '.txt', 'w')
+                f.write(i[0].strip())
+                f.close()
+                pass
+        else:
+            f = open(self.name + '.json', 'w')
+            #for i in self.list:
+            f.write(json.dumps(self.list) )
+            f.close()
+
+
 
 if __name__ == '__main__':
     g = Generate()
     parser = argparse.ArgumentParser(description="One Line", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--name', default='./../../construct-one-line.txt', help='name for "construct" output file.')
+    parser.add_argument('--name', default='./../../construct-one-line', help='name for "construct" output file.')
     parser.add_argument('--verbose', action="store_true", help="print verbose output.")
     parser.add_argument('--lines', default=100, help='number of examples.')
     parser.add_argument('--prompt', action="store_true", help="output prompt files.")
-    parser.add_argument('--integers', default=10, help='highest integers to represent.')
+    parser.add_argument('--integers', default=10, help='highest integers to represent as dots.')
     parser.add_argument('--large_string', action="store_true", help="use large string for containing dots.")
 
     args = parser.parse_args()
@@ -116,5 +132,6 @@ if __name__ == '__main__':
         print(x)
         print(y)
     g.main_loop()
-
-    print(g.list)
+    g.file_loop()
+    if g.verbose:
+        print(g.list)
