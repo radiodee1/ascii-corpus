@@ -113,19 +113,20 @@ class Generate:
         jj = []
         for i in j:
             if i == 1:
-                jj.append('0')
+                jj.append('O')
             else:
                 jj.append('.')
         #jj = [ '0' for i in j if i == 1  ]
-        jj = '[' + ','.join(jj) + ']'
-        print(jj, k)
+        jj = '[' + '.'.join(jj) + ']'
+        if self.verbose:
+            print(jj, k)
         return jj 
 
 
 if __name__ == '__main__':
     g = Generate()
     parser = argparse.ArgumentParser(description="One Line", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--name', default='./../../one-line-dots', help='name for "construct" output file.')
+    parser.add_argument('--name', default='./../../one-line-dots', help='name and path for "construct" output file.')
     parser.add_argument('--verbose', action="store_true", help="print verbose output.")
     parser.add_argument('--lines', default=100, help='number of examples.')
     parser.add_argument('--prompt', action="store_true", help="output prompt files.")
