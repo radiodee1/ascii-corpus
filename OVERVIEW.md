@@ -228,3 +228,8 @@ Google Cloud Path:
 Output:
 
 Google Cloud was too difficult to set up. Output was also generally poor.
+
+# 2023 11 21 - Tuesday
+
+Today I set up the files for a runpod run that would use only prompts from the newly
+finished 'one-line.py' program. Actually running the test is saved for another day.
