@@ -18,4 +18,6 @@ It would be pretty encouraging if the model even did this, if it came up with so
 
 LoRA stands for 'Low Rank Adaptation'. From my limited understanding, a Large Language Model is modified by placing a low rank matrix between every two layers in the model. By Rank, here we mean size. It may be that with LLama 2 and the standard LoRA implementation, the task I'm looking to perform cannot be achieved. For this reason we modify the task and try again. In the following text we describe a second experement that could be more successfull.
 
-Here we will attempt, for at least one experement, to remove ascii art from the training. We will define a string of characters that has a number of countable symbols in it. We ask the LLM to count the symbols after the LoRA training. Hopefully the model will get it right.
+Now we fast forward to the present.
+
+Here we will attempt, for at least one experement, to remove ascii art from the training and prompting. We will define a string of characters that has a number of countable symbols in it. We ask the LLM to count the symbols before and after the LoRA training. Hopefully the model will get it right. If the model gets it right before the training then we are done.
