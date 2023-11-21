@@ -77,7 +77,7 @@ class Generate:
                 m = self.substitute_in_json(q, t, a)
                 self.list.append(m)
             if self.verbose:
-                print(k)
+                print(k, i)
 
     def get_from_bag(self, line, position):
         if self.verbose:
@@ -98,13 +98,15 @@ class Generate:
                 f.close()
                 pass
         else:
+            if self.verbose:
+                print('writing -- may take some time...')
             f = open(self.name + '.json', 'w')
             #for i in self.list:
             f.write(json.dumps(self.list) )
             f.close()
 
     def get_large_string(self, k):
-        j = [ 0 for _ in range(self.lines + 5) ]
+        j = [ 0 for _ in range(self.integers + 5) ]
         num = 0
         while num < 1000 and j.count(1) < k:
             x = random.randint(0, len(j) - 1)
@@ -161,4 +163,4 @@ if __name__ == '__main__':
     g.main_loop()
     g.file_loop()
     if g.verbose:
-        print(g.list)
+        print(g.list[:10])
