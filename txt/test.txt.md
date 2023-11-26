@@ -59,3 +59,66 @@ LoRA stands for 'Low Rank Adaptation'. From my limited understanding, a Large La
 Now we fast forward to the present.
 
 Here we will attempt, for at least one experement, to remove ascii art from the training and prompting. We will define a string of characters that has a number of countable symbols in it. We ask the LLM to count the symbols before and after the LoRA training. Hopefully the model will get it right. If the model gets it right before the training then we are done.
+
+Results:
+
+The same model was loaded as before. No training is being done. We have four sets of prompts and we use them all. Each of the four uses slightly different wording, but 10 possible answers, the integers between 0 and 9. The first set looks like this, and should be answered with the number 3:
+
+```
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[O,O,O]
+### Output:
+```
+
+The answer should be 3. Just for completeness, here is another in the same set.
+
+```
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[O,O,O,O,O]
+### Output:
+```
+
+For this one, the answer should be 5. We call this the single example small prompt. With these we achieved correct answers for 1 through 4. In other words the model got 0 wrong and it got 5 through 9 wrong. The next series would be called the double example small prompt. What we are doing here is offering the model two examples and asking it to fill in the integer for the second example only. This is a sample of the double example small prompt version.
+```
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[O,O]
+### Output: 2 
+
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[O,O,O,O,O]
+### Output:
+```
+The answer should be 5. With this series the model got good scores. It succeded in identifying answers between 0 and 8. It only got the symbol for 9 wrong.
+The next series is single example large prompt. None of the 'large prompt' examples produced good output. The single example large prompt was not correct for any input. The double example large prompt was correct for the integers 0 and 1. No others were correct.
+```
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[O...............O.....O......]
+### Output: 
+```
+The answer should be 3.
+Then double example large prompt.
+```
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[O...............O.....O......]
+### Output: 3
+
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[O.........O.....O.....O......]
+### Output:
+```
+
+The example should lead the model to reply with 4. Since so few correct answers were found with the 'large prompt' examples, we consider them a failure. Possibly if we used a different separator character the results would be better. These examples are easily read by people and apparently not easily read by this computer model.
