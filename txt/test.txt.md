@@ -1,10 +1,48 @@
+# Counting and Logical Ability 
+
+```
+https://github.com/oobabooga/text-generation-webui.git 
+```
+
 I was using oobabooga's llm launching web site. I started at home, but quickly moved to a hosted solution. I was using runpod and a gpu that could handle 24GB of GPU-V ram. I was using LLama 2, I believe the 13B version, and I was using LoRA. My goal was to represent simple png images as ascii art, and then show them to the llm and have the llm identify them. I wanted to do fine tuning to learn a task involving the ascii art I just mentioned.
+
+```
+https://www.runpod.io/
+```
 
 Additionally, my images were all of a similar variety. They all contained collections of dots. It seemed to me that llm's could count, or seem to count, but that that ability might be derived from the symbol of the number in question, not the real number itself. An llm might not truly know that a symbol like a number, written in a text file, also had the meaning of a true number. The purpose of the images was to have the llm count the few dots in the image. Llm's may have the ability to count, but they may not. It seemed to me to be an interesting experement to see if I could get the model to count small integers from simple png files.
 
+```
+https://huggingface.co/TheBloke/Llama-2-13B-Chat-fp16
+```
+
 There is, or there appears to be a functionality in oobabooga to include images in individual queries. This method would be far superior because it uses the image in a query but does not use ascii art. The unfortunate part of this is that when you are doing training the functionality in question is not available. In other words, you can use an image during a query, but not during training. I think this is the case.
 
+```
+| . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . M N M . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . T \ L . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . @ O @ . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . D K W . . . . . . . $ 4 G . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . ! + p . . . . . . . g v t . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . D K N . . . . . . . . . . . |
+| . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
+
+```
+
 I am a linux user, so in python I made a gtk 3 gui that I could use for generating a training set. My training sets generally had 3,000 examples. I had the program generate png images randomly that contained a number of black splotches or dots. The number of dots varied randomly from 0 to 9. Then I had my code take a version of the png and convert it to ascii art and include it in the various training question/answer pairs. A training run took between 1 and 3 hours.
+
+```
+[gui screenshot]
+```
 
 There were several serious challenges to this methodology. One of the main challenges has to do with the llm concept itself. Before an llm processes a piece of text it needs to be tokenized. Tokens sometimes take several symbols and combine them to make one unit. Pictures like png's or jpeg's need to represent visual data as pixels, spots or dots that have different intensities. These dots also need to be evenly spaced. Also, the tokenization task is not clearly visible to the human user. What this means is that lines of ascii art can be converted to tokens that do not really reflect the nature of the original pixels. And even further, one line in an ascii art example could be tokenized to some data that is not the same length as a previous line might be tokenized. The concept of space or distance in the horizontal direction in an image is lost during the tokenization.
 
