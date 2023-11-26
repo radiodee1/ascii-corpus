@@ -1,0 +1,26 @@
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[O,O]
+### Output: 2
+
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[]
+### Output:
+
+
+
+
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[............O.........O......]
+### Output: 2
+
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[.......O.O..O..O.O.O...O....O.O...]
+### Output:
