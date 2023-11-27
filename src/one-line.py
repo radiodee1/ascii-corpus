@@ -24,8 +24,7 @@ text_prompt = {
 {}
 ### Input:
 {}
-### Output:
-{}
+### Output: {}
 '''
 }
 
@@ -42,6 +41,7 @@ class Generate:
         self.list = []
         self.foreground = 'O'
         self.background = '.'
+        self.example = -1
 
     def test_output(self):
         print('test_output')
@@ -72,8 +72,20 @@ class Generate:
             q = "How many O symbols are inside these brackets?"
             t = jk 
             a = str(k)
+            m = ""
             if self.prompt:
-                m = self.substitute_in_text(q, t, '')
+                if self.example > -1:
+                    ## here we repeat some previous code.
+                    a = str(self.example)
+                    if self.large:
+                        jk = self.get_large_string(self.example)
+                    else:
+                        jk = [ 'O' for _ in range(self.example) ]
+                        jk = '[' + ','.join(jk) + ']'
+                    m += self.substitute_in_text(q, jk, a).strip()
+                    #m += '\n'
+                    pass 
+                m += self.substitute_in_text(q, t, '')
                 self.list.append([m, k])
             else:
                 m = self.substitute_in_json(q, t, a)
@@ -140,6 +152,7 @@ if __name__ == '__main__':
     parser.add_argument('--large_string', action="store_true", help="use large string for containing dots.")
     parser.add_argument('--foreground', default='O', help="set foreground character for large_string.")
     parser.add_argument('--background', default='.', help="set background character for large_string.")
+    parser.add_argument('--example', default=-1, help="designate an example to include in prompt output.")
 
     args = parser.parse_args()
     g.lines = int(args.lines)
@@ -151,6 +164,8 @@ if __name__ == '__main__':
     
     g.foreground = args.foreground[0]
     g.background = args.background[0]
+
+    g.example = int(args.example)
 
     g.bag = [ i for i in range(g.integers) ]
 
