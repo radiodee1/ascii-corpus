@@ -280,4 +280,4 @@ How many O symbols are inside these brackets?
 [,,,,,,,,O,,,,,O,,,,,O,,,O,,,O]
 ### Output:
 ```
-In this example you would expect the model to answer '5'. No prompt that I tried today gave the right answer. I tried prompts for integers 0 through 9.
+In this example you would expect the model to answer '5'. No prompt that I tried today gave the right answer. I tried prompts for integers 0 through 9. I also tried lowering the temperature, but that did not help.
