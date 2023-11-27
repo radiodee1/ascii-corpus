@@ -259,4 +259,25 @@ How many O symbols are inside these brackets?
 [O,O,O,O,O]
 ### Output:
 ```
-In this example the model is expected to answer '5'. 
+In this example the model is expected to answer '5'.
+
+---
+
+# 2023 11 27 - Monday 
+
+Logged in to runpod.io again to try new prompt. This version is like the long version above but has comma characters instead of periods. An example is below.
+
+```
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[,,,,,,,,,,,,,,O,O,,,O,,,,,,,,]
+### Output: 3
+
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[,,,,,,,,O,,,,,O,,,,,O,,,O,,,O]
+### Output:
+```
+In this example you would expect the model to answer '5'. No prompt that I tried today gave the right answer. I tried prompts for integers 0 through 9.
