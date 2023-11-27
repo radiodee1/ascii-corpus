@@ -233,3 +233,26 @@ Google Cloud was too difficult to set up. Output was also generally poor.
 
 Today I set up the files for a runpod run that would use only prompts from the newly
 finished 'one-line.py' program. Actually running the test is saved for another day.
+
+# 2023 11 26 - Sunday
+
+Logged into runpod and tried various prompts. The short versions worked, after some fiddling. 
+The long versions did not, for the most part, work. I may make a video about this so that I can
+go into it in more detail.
+
+The short versions worked as long as an example prompt was given. See the text below.
+
+```
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[O,O]
+### Output: 2 
+
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[O,O,O,O,O]
+### Output:
+```
+In this example the model is expected to answer '5'. 
