@@ -40,6 +40,8 @@ class Generate:
         self.bag = []
         self.large = False
         self.list = []
+        self.foreground = 'O'
+        self.background = '.'
 
     def test_output(self):
         print('test_output')
@@ -106,6 +108,8 @@ class Generate:
             f.close()
 
     def get_large_string(self, k):
+        f = self.foreground
+        b = self.background
         j = [ 0 for _ in range(self.integers + 5) ]
         num = 0
         while num < 1000 and j.count(1) < k:
@@ -115,11 +119,11 @@ class Generate:
         jj = []
         for i in j:
             if i == 1:
-                jj.append('O')
+                jj.append(f)
             else:
-                jj.append('.')
+                jj.append(b)
         #jj = [ '0' for i in j if i == 1  ]
-        jj = '[' + '.'.join(jj) + ']'
+        jj = '[' + b.join(jj) + ']'
         if self.verbose:
             print(jj, k)
         return jj 
@@ -134,6 +138,8 @@ if __name__ == '__main__':
     parser.add_argument('--prompt', action="store_true", help="output prompt files.")
     parser.add_argument('--integers', default=10, help='highest integers to represent as dots.')
     parser.add_argument('--large_string', action="store_true", help="use large string for containing dots.")
+    parser.add_argument('--foreground', default='O', help="set foreground character for large_string.")
+    parser.add_argument('--background', default='.', help="set background character for large_string.")
 
     args = parser.parse_args()
     g.lines = int(args.lines)
@@ -142,6 +148,9 @@ if __name__ == '__main__':
     g.prompt = args.prompt
     g.integers = int(args.integers)
     g.large = args.large_string
+    
+    g.foreground = args.foreground[0]
+    g.background = args.background[0]
 
     g.bag = [ i for i in range(g.integers) ]
 
@@ -160,6 +169,7 @@ if __name__ == '__main__':
         y = g.substitute_in_text('help', 'me', 'out')
         print(x)
         print(y)
+        print(g.foreground, g.background, 'characters')
     g.main_loop()
     g.file_loop()
     if g.verbose:
