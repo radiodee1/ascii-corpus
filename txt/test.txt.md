@@ -18,7 +18,7 @@ https://huggingface.co/TheBloke/Llama-2-13B-Chat-fp16
 
 There is, or there appears to be a functionality in oobabooga to include images in individual queries. This method would be far superior because it uses the image in a query but does not use ascii art. The unfortunate part of this is that when you are doing training the functionality in question is not available. In other words, you can use an image during a query, but not during training. I think this is the case.
 
-```
+```text
 | . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
 | . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . |
@@ -40,7 +40,7 @@ There is, or there appears to be a functionality in oobabooga to include images 
 
 I am a linux user, so in python I made a gtk 3 gui that I could use for generating a training set. My training sets generally had 3,000 examples. I had the program generate png images randomly that contained a number of black splotches or dots. The number of dots varied randomly from 0 to 9. Then I had my code take a version of the png and convert it to ascii art and include it in the various training question/answer pairs. A training run took between 1 and 3 hours.
 
-```
+```text
 [gui screenshot]
 ```
 
@@ -64,7 +64,7 @@ Results:
 
 The same model was loaded as before. No training is being done. We have four sets of prompts and we use them all. Each of the four uses slightly different wording, but 10 possible answers, the integers between 0 and 9. The first set looks like this, and should be answered with the number 3:
 
-```
+```text
 ### Instruction:
 How many O symbols are inside these brackets?
 ### Input:
@@ -74,7 +74,7 @@ How many O symbols are inside these brackets?
 
 The answer should be 3. Just for completeness, here is another in the same set.
 
-```
+```text
 ### Instruction:
 How many O symbols are inside these brackets?
 ### Input:
@@ -83,7 +83,8 @@ How many O symbols are inside these brackets?
 ```
 
 For this one, the answer should be 5. We call this the single example small prompt. With these we achieved correct answers for 1 through 4. In other words the model got 0 wrong and it got 5 through 9 wrong. The next series would be called the double example small prompt. What we are doing here is offering the model two examples and asking it to fill in the integer for the second example only. This is a sample of the double example small prompt version.
-```
+
+```text
 ### Instruction:
 How many O symbols are inside these brackets?
 ### Input:
@@ -98,7 +99,8 @@ How many O symbols are inside these brackets?
 ```
 The answer should be 5. With this series the model got good scores. It succeded in identifying answers between 0 and 8. It only got the symbol for 9 wrong.
 The next series is single example large prompt. None of the 'large prompt' examples produced good output. The single example large prompt was not correct for any input. The double example large prompt was correct for the integers 0 and 1. No others were correct.
-```
+
+```text
 ### Instruction:
 How many O symbols are inside these brackets?
 ### Input:
@@ -107,7 +109,8 @@ How many O symbols are inside these brackets?
 ```
 The answer should be 3.
 Then double example large prompt.
-```
+
+```text
 ### Instruction:
 How many O symbols are inside these brackets?
 ### Input:
