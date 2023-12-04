@@ -46,7 +46,7 @@ I am a linux user, so in python I made a gtk 3 gui that I could use for generati
 
 There were several serious challenges to this methodology. One of the main challenges has to do with the llm concept itself. Before an llm processes a piece of text it needs to be tokenized. Tokens sometimes take several symbols and combine them to make one unit. Pictures like png's or jpeg's need to represent visual data as pixels, spots or dots that have different intensities. These dots also need to be evenly spaced. Also, the tokenization task is not clearly visible to the human user. What this means is that lines of ascii art can be converted to tokens that do not really reflect the nature of the original pixels. And even further, one line in an ascii art example could be tokenized to some data that is not the same length as a previous line might be tokenized. The concept of space or distance in the horizontal direction in an image is lost during the tokenization.
 
-Vertical distance is lost too, as the lines, once tokenized, are treated separately by the model. This vertical challenge is what is being challenged typically in the training.
+Vertical distance is lost too, as the lines, once tokenized, are treated separately by the model. This vertical challenge is mostly what is being challenged in the training I describe here.
 
 There are other problems as well. The fine-tuning process does not automatically take into acount that ascii art input is large, symbol wise, during training. The window needs to be large enought to evaluate a complete ascii example with each question/answer pair. The larger this window, the longer training takes. This is also related to the fact that I'm using LoRA for my fine-tuning. The R in LoRA stands for Rank, and this rank is the window I referred to above.
 
@@ -82,7 +82,7 @@ How many O symbols are inside these brackets?
 ### Output:
 ```
 
-For this one, the answer should be 5. We call this the single example small prompt. With these we achieved correct answers for 1 through 4. In other words the model got 0 wrong and it got 5 through 9 wrong. The next series would be called the double example small prompt. What we are doing here is offering the model two examples and asking it to fill in the integer for the second example only. This is a sample of the double example small prompt version.
+For this one, the answer should be 5. We call this the 'single-example-small-prompt'. With these we achieved correct answers for 1 through 4. In other words the model got 0 wrong and it got 5 through 9 wrong. The next series would be called the 'double-example-small-prompt'. What we are doing here is offering the model two examples and asking it to fill in the integer for the second example only. This is a sample of the 'double-example-small-prompt' version.
 
 ```text
 ### Instruction:
@@ -98,7 +98,9 @@ How many O symbols are inside these brackets?
 ### Output:
 ```
 The answer should be 5. With this series the model got good scores. It succeded in identifying answers between 0 and 8. It only got the symbol for 9 wrong.
-The next series is single example large prompt. None of the 'large prompt' examples produced good output. The single example large prompt was not correct for any input. The double example large prompt was correct for the integers 0 and 1. No others were correct.
+The next series is 'single-example-large-prompt'. None of the 'large-prompt' examples produced good output. The single example large prompt was not correct for any input. The 'double-example-large-prompt' was correct for the integers 0 and 1. No others were correct.
+
+This is single-example-large-prompt.
 
 ```text
 ### Instruction:
@@ -108,7 +110,7 @@ How many O symbols are inside these brackets?
 ### Output: 
 ```
 The answer should be 3.
-Then double example large prompt.
+Then 'double-example-large-prompt'.
 
 ```text
 ### Instruction:
@@ -124,4 +126,8 @@ How many O symbols are inside these brackets?
 ### Output:
 ```
 
-The example should lead the model to reply with 4. Since so few correct answers were found with the 'large prompt' examples, we consider them a failure. Possibly if we used a different separator character the results would be better. These examples are easily read by people and apparently not easily read by this computer model.
+The example should lead the model to reply with 4. Since so few correct answers were found with the 'large-prompt' examples, we consider them a failure. Possibly if we used a different separator character the results would be better. These examples are easily read by people and apparently not easily read by this computer model.
+
+## Conclusions:
+
+In some of the examples the model seems to count, and in some it seems unable. I feel the model cannot count, but recognizes groups of characters together and associates them with a simple number. Others might disagree, but I think that the knowlege of an array that contains two items is hard-coded into the model, and that it cannot count to two.
