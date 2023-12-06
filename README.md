@@ -10,7 +10,7 @@ ascii images for fine-tuning corpus of large language models.
   - Click the 'list size' button until you have a group that is sufficiently large for your training. The highest value is 1,000 but you can run the gui several times to come up with the number you like.
   - Click the 'profile' button to change the profile. You will probably want this to read '0-9'. This is the most sensible setting.
 - STEP 2: build the png files that will be transformed into the output. This process uses the csv file.
- - Make sure you are still looking at the 'compose dots' tab. To process all the png files, press 'auto-png-editor'. You will be asked to specify the csv file you generated above. Once the file has been specified, click the button again. If you want to generate one png at a time, press 'png-editor'.
+  - Make sure you are still looking at the 'compose dots' tab. To process all the png files, press 'auto-png-editor'. You will be asked to specify the csv file you generated above. Once the file has been specified, click the button again. If you want to generate one png at a time, press 'png-editor'.
 - STEP 3: arrange the folders that will be needed for the output. These are the png file folders.
 - STEP 4: generate the output text files.
 
