@@ -1,5 +1,5 @@
 # Counting and ascii-corpus GUI 
-Ascii images of dots for fine-tuning corpus of large language models.
+Use the GUI to create ascii images of dots for fine-tuning corpus of large language models.
 
 - Install the necessary packages on your system. There are pip and also apt requirements. I am using Ubuntu 23.10.
 - Make a folder for your output. I have a folder in my `/home/` folder called `/home/<user>/workspace/`. Do not put the output folder in the project/git folder.
