@@ -1,4 +1,4 @@
-# ascii-corpus GUI 
+# Counting and ascii-corpus GUI 
 Ascii images of dots for fine-tuning corpus of large language models.
 
 - Install the necessary packages on your system. There are pip and also apt requirements. I am using Ubuntu 23.10.
@@ -21,7 +21,7 @@ Ascii images of dots for fine-tuning corpus of large language models.
   - Pick the folder for the output as well as a name for the resulting file.
   - You can click on the 'prompt edit txt' or the 'prompt edit json' button depending on which type of file you are using before you use the 'write' option above.
 
-# Counting and Logic python script
+# Counting and `one-line.py` python script
 
 - cd into the `src` directory.
 - run `./one-line.py --help`
@@ -49,7 +49,7 @@ options:
   --example EXAMPLE     designate an example to include in prompt output. (default:
                         -1)
 ```
-- Individual experimentation is necessary for good results, but the following code is a good starting spot.
+- Individual experimentation is necessary for good results, but the following code is a good starting point.
 
 ```
 ./one-line.py --prompt --lines 10 --example 3 
