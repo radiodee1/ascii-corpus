@@ -64,5 +64,16 @@ options:
 - `--example 3` tells the script to include an example in the prompt. This aids the model in picking a answer.
 - `--large_string` tells the script to format the output differently. 
 
+
+An example of the 'large_string' option is below.
+```text
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[O...............O.....O......]
+### Output:
+```
+The models should answer this with the integer 3.
+
 ## Not Implemented
 using MNIST images for ascii fine-tuning corpus for large language models.
