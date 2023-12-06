@@ -61,7 +61,7 @@ options:
 
 - `--prompt` tells the script to generate single examples that do not have the final integer specified. There is a blank spot for the result.
 - `--lines 10` tells the script to generate 10 files.
-- `--example` tells the script to include an example in the prompt. This aids the model in picking a answer.
+- `--example 3` tells the script to include an example in the prompt. This aids the model in picking a answer.
 - `--large_string` tells the script to format the output differently. 
 
 ## Not Implemented
