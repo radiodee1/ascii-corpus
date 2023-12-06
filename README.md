@@ -73,7 +73,25 @@ How many O symbols are inside these brackets?
 [O...............O.....O......]
 ### Output:
 ```
-The models should answer this with the integer 3.
+The model should answer this with the integer 3.
+
+A prompt that uses the `--example 3` option is below.
+
+```
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[,,,,,,,,,,,,,,O,O,,,O,,,,,,,,]
+### Output: 3
+
+### Instruction:
+How many O symbols are inside these brackets?
+### Input:
+[,,,,,,,,O,,,,,O,,,,,O,,,O,,,O]
+### Output:
+```
+
+The model should anser with the integer 5.
 
 ## Not Implemented
 using MNIST images for ascii fine-tuning corpus for large language models.
