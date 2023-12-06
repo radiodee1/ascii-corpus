@@ -11,8 +11,15 @@ ascii images for fine-tuning corpus of large language models.
   - Click the 'profile' button to change the profile. You will probably want this to read '0-9'. This is the most sensible setting.
 - STEP 2: build the png files that will be transformed into the output. This process uses the csv file.
   - Make sure you are still looking at the 'compose dots' tab. To process all the png files, press 'auto-png-editor'. You will be asked to specify the csv file you generated above. Once the file has been specified, click the button again. If you want to generate one png at a time, press 'png-editor'.
+  - Because there is an upper limit of 1,000 files, you may want to create additional folders at this time with more randomly generated png files in them. I typically used three folders in this setup to total 3,000 training examples.
 - STEP 3: arrange the folders that will be needed for the output. These are the png file folders.
+  - Go to the 'sources' tab. Click the 'add source' button and use the dialog to add your png folder. Repeat clicking the 'add source' button for all the folders you have.
+  - You may want to change the association of the output text file by clicking the 'associate' button. Initially it is set for 'train', and this is good for most people. Some may switch the 'associate' to 'test' or 'validate'. Click the 'finish' button.
 - STEP 4: generate the output text files.
+  - Go to the 'output' tab.
+  - Click either the 'write-text' or the 'write-json' button, depending on your needs. A file dialog will open.
+  - Pick the folder for the output as well as a name for the resulting file.
+  - You can click on the 'prompt edit txt' or the 'prompt edit json' button depending on which type of file you are using before you use the 'write' option above.
 
 ## Not Implemented
 using MNIST images for ascii fine-tuning corpus for large language models.
